@@ -1,13 +1,39 @@
 <div class="fullpage-container">
   <div class="board-bar">
-    <div class="board-title">
-      {{ board.title }}
+    <div class="flex-row">
+      <div class="flex-row home pointer" [routerLink]="['/boards']">
+        <mat-icon class="mat-icon-big" style="fill: white ;" svgIcon="logo"></mat-icon>&nbsp; Trell<i>ode</i>
+      </div>
+      <div class="board-title">
+        {{ board.title }}
+      </div>
+    </div>
+    <div class="board-menu pointer">
+      <mat-icon class="mat-icon-big" style="fill: white;" svgIcon="dots" [matMenuTriggerFor]="menu"></mat-icon>
     </div>
   </div>
   <div class="lists-list">
     @for (list of board.lists; track board.id) {
       <app-list [list]="list"></app-list>
     }
+    <div *ngIf="!showCreateListInput" class="flex-row add-list-bar" (click)="switchCreateListInput()">
+      <mat-icon class="mat-icon-md" style="fill: black;" svgIcon="plus"></mat-icon>
+      <button mat-button class="primary">Ajouter une autre liste</button>
+    </div>
+    <div *ngIf="showCreateListInput" class="card">
+      <div>
+        <input #listTitleInput class="card-title-input" mat-input [(ngModel)]="newListTitleContent" (keyup.enter)="addList()" placeholder="Saisissez un titre pour cette carte..."/>
+      </div>
+      <div>
+        <button mat-button class="primary" (click)="switchCreateListInput()">Annuler</button>
+        <button mat-button class="primary" (click)="addList()">Enregistrer</button>
+      </div>
+    </div>
   </div>
-  <button mat-button class="primary" (click)="addList()">Add list</button>
 </div>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item class="menu-button" (click)="archiveBoard(board.id)">
+    <mat-icon class="mat-icon" svgIcon="archive"></mat-icon>
+    <span>Archiver</span>
+  </button>
+</mat-menu>

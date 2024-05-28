@@ -10,6 +10,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BoardComponent } from './components/board/board.component';
+import { BoardsComponent } from './components/boards/boards.component';
 import { ListComponent } from './components/list/list.component';
 import { CardComponent } from './components/card/card.component';
 import { CommentComponent } from './components/comment/comment.component';
@@ -26,15 +27,19 @@ import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar'
 import { MiscService } from './services/misc.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QuillModule } from 'ngx-quill'
+import { BroadcastService } from './services/broadcast.service';
+import { BoardFormComponent } from './components/board-form/board-form.component';
 
 @NgModule({
     declarations: [
         AppComponent,
+        BoardsComponent,
         BoardComponent,
         ListComponent,
         CardComponent,
         CommentComponent,
         CardFormComponent,
+        BoardFormComponent,
         NotificationComponent
     ],
     bootstrap: [AppComponent],
@@ -63,6 +68,7 @@ import { QuillModule } from 'ngx-quill'
     ],
     providers: [
         MiscService,
+        BroadcastService,
         provideHttpClient(withInterceptorsFromDi()),
         {
             provide: MatSnackBarRef,

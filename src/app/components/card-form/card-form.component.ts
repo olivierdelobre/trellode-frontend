@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MiscService } from 'src/app/services/misc.service';
 import { Comment } from '../../models/models';
+import { BroadcastService } from 'src/app/services/broadcast.service';
 
 @Component({
   selector: 'card-form',
@@ -44,7 +45,8 @@ export class CardFormComponent implements OnInit {
     public cdr: ChangeDetectorRef,
     @Inject(MAT_DIALOG_DATA) public data: CardComponent,
     public router: Router,
-    private miscService: MiscService) {
+    private miscService: MiscService,
+    private broadcastService: BroadcastService) {
       this.card = data.card;
       console.log("card="+JSON.stringify(this.card));
   }
@@ -149,6 +151,7 @@ export class CardFormComponent implements OnInit {
         };
         this.miscService.openSnackBar('success', msg);
         this.onSuccess.emit();
+        this.broadcastService.updateRefreshBoard(true);
         this.dialogRef.close();
       },
       error: (error) => {

@@ -1,6 +1,8 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { BoardService } from '../../services/board.service';
 import { List, Card } from '../../models/models';
+import { MiscService } from 'src/app/services/misc.service';
+import { BroadcastService } from 'src/app/services/broadcast.service';
 
 @Component({
   selector: 'app-list',
@@ -22,7 +24,10 @@ export class ListComponent implements OnInit {
   newCardTitleContent: string = '';
   @ViewChild('cardTitleInput') cardTitleInput: any;
 
-  constructor(private boardService: BoardService) {}
+  constructor(private boardService: BoardService,
+    private miscService: MiscService,
+    private broadcastService: BroadcastService
+  ) {}
 
   ngOnInit(): void {
     
@@ -55,17 +60,42 @@ export class ListComponent implements OnInit {
       createdAt: new Date(),
       updatedAt: new Date()
     };
-    this.boardService.createCard(this.list.id, newCard).subscribe(() => {
-      this.loadList();
-      this.showCreateCardInput = false;
-      this.newCardTitleContent = '';
+    this.boardService.createCard(this.list.id, newCard).subscribe({
+      next: () => {
+        this.loadList();
+        this.showCreateCardInput = false;
+        this.newCardTitleContent = '';
+      },
+      error: (error) => {
+        if (error.error.error) {
+          this.miscService.openSnackBar('failure', error.error.error);
+        }
+        else {
+          this.miscService.openSnackBar('failure', { what: 'unexpected' });
+        }
+      }
     });
   }
 
   archiveList(listId: number): void {
-    this.boardService.archiveList(listId).subscribe(() => {
-      this.loadList();
-    });
+    this.boardService.archiveList(listId).subscribe({
+      next: () => {
+        let msg = {
+          what: 'MESSAGES.LIST_ARCHIVED',
+        };
+        this.miscService.openSnackBar('success', msg);
+        this.loadList();
+        this.broadcastService.updateRefreshBoard(true);
+      },
+      error: (error) => {
+        if (error.error.error) {
+          this.miscService.openSnackBar('failure', error.error.error);
+        }
+        else {
+          this.miscService.openSnackBar('failure', { what: 'unexpected' });
+        }
+      }
+    })
   }
 
   updateList(list: List): void {

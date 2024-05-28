@@ -1,10 +1,22 @@
-<h1>All boards</h1>
-<div class="boards-list">
-@for (board of boards; track board.id) {
-  <div class="board" [routerLink]="['/boards/', board.id]">
-    <div class="title">{{ board.title }}</div>
+<div class="fullpage-container">
+  <div class="board-bar">
+    <div class="flex-row">
+      <div class="flex-row home pointer" [routerLink]="['/boards']">
+        <mat-icon class="mat-icon-big" style="fill: #303030 ;" svgIcon="logo"></mat-icon>&nbsp; Trell<i>ode</i>
+      </div>
+      <div class="board-title">
+        Tous vos tableaux
+      </div>
+      <div class="create-board-button">
+        <button mat-button (click)="openBoardForm()">Créer un tableau</button>
+      </div>
+    </div>
   </div>
-}
+  <div class="boards-list">
+  @for (board of boards; track board.id) {
+    <div class="board" [routerLink]="['/boards/', board.id]">
+      <div class="title">{{ board.title }}</div>
+    </div>
+  }
+  </div>
 </div>
-<button (click)="addBoard()">Add Board</button>
-  

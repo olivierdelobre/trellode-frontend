@@ -1,0 +1,26 @@
+<div>
+  <div class="card-title-bar">
+    <div>
+      <h1 *ngIf="!showTitleInput" (click)="switchTitleInput()">
+        {{ board.title }}
+      </h1>
+      <input #titleInput class="board-title-input" mat-input *ngIf="showTitleInput" [(ngModel)]="titleContent" (keyup.enter)="saveBoard()" (keyup.escape)="switchTitleInput()" placeholder="Titre du tableau" [value]="board.title"/>
+    </div>
+    <mat-icon class="close-popup-x pointer" svgIcon="close" (click)="cancel()"></mat-icon>
+  </div>
+  <div class="flex-row card-splitter">
+    <div class="left-column">
+      <h2>Fond d'écran</h2>
+      <div>
+      </div>
+    </div>
+    <div class="right-column" *ngIf="board.id != 0">
+      <div class="right-title">
+        Actions
+      </div>
+      <button mat-button class="primary" class="button-left" (click)="archiveBoard()">
+        <mat-icon class="mat-icon" svgIcon="archive"></mat-icon> Archiver
+      </button>
+    </div>
+  </div>
+</div>

@@ -14,7 +14,7 @@ export class AppComponent {
     private domSanitizer: DomSanitizer
   ) {
     // register all icons once
-    ['archive', 'close', 'comment', 'date', 'description', 'dots', 'plus'].forEach(name => {
+    ['archive', 'close', 'comment', 'date', 'description', 'dots', 'home', 'logo', 'plus'].forEach(name => {
     this.matIconRegistry.addSvgIcon(
       name,
       this.domSanitizer.bypassSecurityTrustResourceUrl(`assets/icons/${name}.svg`)
