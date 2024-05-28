@@ -1,0 +1,9 @@
+{
+    "production": false,
+    "name": "dev",
+    "settings": {
+        "token_name": "trellode.token",
+        "lang": "trellode.lang",
+        "api": "http://localhost:8080/trellode-api"
+    }
+}

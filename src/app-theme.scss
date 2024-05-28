@@ -1,0 +1,76 @@
+$epfl-font: "SuisseIntl",
+Arial,
+sans-serif;
+$red: #FF0000;
+$red-dark: #bd2424;
+$gray-100:#E6E6E6;
+$gray-200:#D5D5D5;
+$gray-300:#C1C1C1;
+$gray-400:#919191;
+$gray-600: #808080;
+$gray-600: #707070;
+$black: #212121;
+$crimson: #B51F1F;
+$valid: #7ac57a;
+$white: #FFFFFF;
+$not-valid: #e07676;
+$blackToRedFilter: invert(21%) sepia(100%) saturate(7414%) hue-rotate(359deg) brightness(94%) contrast(117%);
+$small-radius: 2px;
+$darkest-grey: #707070;
+$dark-grey: #C1C1C1;
+$grey: #D5D5D5;
+$light-grey: #E6E6E6;
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: $gray-300 !important;
+    background: #ffffff !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+    color: $gray-300 !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick {
+    color: $gray-300 !important;
+    border-radius: 0 !important;
+}
+
+::ng-deep .mat-input-element {
+    caret-color: $gray-300 !important;
+}
+
+::ng-deep .mat-form-field-invalid .mat-input-element,
+.mat-warn .mat-input-element {
+    caret-color: $gray-300 !important;
+}
+
+::ng-deep .mat-form-field-label {
+    color: $gray-300 !important;
+}
+
+::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+    color: $gray-300 !important;
+}
+
+::ng-deep .mat-form-field.mat-form-field-invalid .mat-form-field-label {
+    color: $gray-300 !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-start {
+    border-radius: 0px !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-end {
+    border-radius: 0px !important;
+}
+input.mat-input-element {
+    color: $gray-600;
+}
+
+.mat-drawer.mat-drawer-side {
+    max-width: 250px;
+}
+
+::ng-deep .mat-drawer-backdrop {
+    background-color: rgba(255, 255, 255, 0.6) !important;
+  }

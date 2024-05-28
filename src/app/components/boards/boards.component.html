@@ -1,0 +1,10 @@
+<h1>All boards</h1>
+<div class="boards-list">
+@for (board of boards; track board.id) {
+  <div class="board" [routerLink]="['/boards/', board.id]">
+    <div class="title">{{ board.title }}</div>
+  </div>
+}
+</div>
+<button (click)="addBoard()">Add Board</button>
+  

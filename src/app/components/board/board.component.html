@@ -1,0 +1,13 @@
+<div class="fullpage-container">
+  <div class="board-bar">
+    <div class="board-title">
+      {{ board.title }}
+    </div>
+  </div>
+  <div class="lists-list">
+    @for (list of board.lists; track board.id) {
+      <app-list [list]="list"></app-list>
+    }
+  </div>
+  <button mat-button class="primary" (click)="addList()">Add list</button>
+</div>

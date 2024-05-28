@@ -1,0 +1,18 @@
+.comment-box {
+    margin-bottom: 20px;
+}
+
+.comment {
+    background-color: #FFFFFF;
+    box-shadow: var(--ds-shadow-raised, 0px 1px 1px #091e4240, 0px 0px 1px #091e424f);
+    border-radius: 10px;
+    margin: 5px 10px 10px 0;
+    padding: 10px 13px 10px 13px;
+    width: calc(100% - 26px);
+}
+
+.date {
+    font-size: 13px;
+    font-weight: 400;
+}
+

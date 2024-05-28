@@ -1,0 +1,9 @@
+<div class="comment-box">
+    <div class="flex-row">
+        <mat-icon class="mat-icon" svgIcon="date"></mat-icon>
+        &nbsp;<span class="date">{{ comment.createdAt | date: 'dd/MM/yyyy à HH:mm:ss' }}</span>
+    </div>
+    <div class="comment" [innerHTML]="comment.content"></div>
+    <a class="button" (click)="deleteComment(comment.id)">Modifier</a>
+    <a class="button" (click)="updateComment(comment)">Supprimer</a>
+</div>

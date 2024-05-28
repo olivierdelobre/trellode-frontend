@@ -1,0 +1,37 @@
+.card {
+    background-color: #FFFFFF;
+    box-shadow: var(--ds-shadow-raised, 0px 1px 1px #091e4240, 0px 0px 1px #091e424f);
+    border-radius: 10px;
+    margin: 0 10px 10px 0;
+    padding: 10px;
+    width: 230px;
+    cursor: pointer;
+
+    .title {
+        color: #202020;
+        font-size: 14px;
+        font-weight: 400;
+        text-overflow: ellipsis;
+    }
+}
+
+.card-icons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 5px 0 0 5px;
+}
+
+.comments-icon {
+    
+}
+
+.description-icon {
+    margin-right: 10px;
+}
+
+.comments-count {
+    font-size: 12px;
+    margin-left: 4px;
+}

@@ -1,0 +1,95 @@
+@import '~quill/dist/quill.snow.css';
+
+html, body { height: 100%; }
+
+body {
+    background-color: white; //rgb(0, 121, 191);
+    margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+p {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.mat-icon {
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.mat-icon-big {
+    width: 22px !important;
+    height: 22px !important;
+}
+
+.mat-icon-small {
+    width: 14px !important;
+    height: 14px !important;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.menu-button {
+    padding: 0;
+    margin: 0;
+}
+
+.mat-mdc-menu-content {
+    padding: 0 !important;
+}
+
+.mat-mdc-menu-item {
+    min-height: 40px !important;
+}
+
+.mat-mdc-dialog-surface {
+    padding: 20px !important;
+    background-color: #F0F0F0 !important;
+}
+
+.xxlg-popup .mat-dialog-container {
+    width: 1200px;
+}
+
+.xlg-popup .mat-dialog-container {
+    width: 1000px;
+}
+
+.lg-popup .mat-mdc-dialog-container {
+    width: 800px;
+}
+
+.md-popup .mat-dialog-container {
+    width: 600px;
+}
+
+.sm-popup .mat-dialog-container {
+  width: 450px;
+}
+
+a.button {
+    text-decoration: underline;
+    font-size: 13px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.button-left {
+    text-align: left !important;
+}

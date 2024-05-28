@@ -1,0 +1,17 @@
+@import '../../../app-theme.scss';
+
+.highligh {
+    font-weight: 600;
+    font-family: $epfl-font;
+}
+
+.message {
+    padding-right: 30px;
+}
+
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+}

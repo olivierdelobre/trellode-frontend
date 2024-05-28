@@ -1,0 +1,61 @@
+.list {
+    background-color: #F0F0F0;
+    box-shadow: var(--ds-shadow-raised, 0px 1px 1px #091e4240, 0px 0px 1px #091e424f);
+    border-radius: 10px;
+    margin: 10px 10px 0 10px;
+    padding: 10px;
+    width: 250px;
+}
+
+.title-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .title {
+        color: #101010;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        margin-left: 5px;
+        text-overflow: ellipsis;
+    }
+}
+
+.list-menu {
+    margin-top: -10px;
+    margin-right: 5px;
+}
+
+.add-card-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+}
+
+.add-card-button {
+    margin-left: -5px;
+    margin-top: 2px;
+}
+
+.card {
+    background-color: #FFFFFF;
+    box-shadow: var(--ds-shadow-raised, 0px 1px 1px #091e4240, 0px 0px 1px #091e424f);
+    border-radius: 10px;
+    margin: 0 10px 10px 0;
+    padding: 10px;
+    width: 230px;
+    cursor: pointer;
+
+    input {
+        width: 230px;
+        border: 0 !important;
+    }
+
+    input:focus {
+        outline: none;
+    }
+}

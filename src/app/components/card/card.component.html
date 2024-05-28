@@ -1,0 +1,10 @@
+<div class="card pointer" (click)="openCardForm()">
+    <div class="title">{{ card.title }}</div>
+    <div class="card-icons">
+        <mat-icon *ngIf="card.description" class="mat-icon description-icon" svgIcon="description"></mat-icon>
+        <ng-container *ngIf="card.comments.length > 0" class="comments">
+            <mat-icon class="mat-icon-small comments-icon" svgIcon="comment"></mat-icon>
+            <div class="comments-count">{{card.comments.length}}</div>
+        </ng-container>
+    </div>
+</div>

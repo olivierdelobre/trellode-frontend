@@ -1,0 +1,30 @@
+<div class="list">
+  <div class="title-bar">
+    <div class="title">{{ list.title }}</div>
+    <mat-icon class="mat-icon list-menu" svgIcon="dots" class="pointer" [matMenuTriggerFor]="menu"></mat-icon>
+  </div>
+  <div *ngFor="let card of list.cards" class="board">
+    <app-card [card]="card"></app-card>
+  </div>
+  <div *ngIf="showCreateCardInput">
+    <div class="card">
+      <input #cardTitleInput class="card-title-input" mat-input [(ngModel)]="newCardTitleContent" (keyup.enter)="addCard()" placeholder="Saisissez un titre pour cette carte..."/>
+      <br/>
+      <br/>
+    </div>
+    <div>
+      <button mat-button class="primary" (click)="switchCreateCardInput()">Annuler</button>
+      <button mat-button class="primary" (click)="addCard()">Enregistrer</button>
+    </div>
+  </div>
+  <div *ngIf="!showCreateCardInput" class="add-card-bar" (click)="switchCreateCardInput()">
+    <mat-icon class="mat-icon-big" svgIcon="plus"></mat-icon>
+    <button mat-button class="secondary" class="add-card-button">Ajouter une carte</button>
+  </div>
+</div>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item class="menu-button">
+    <mat-icon class="mat-icon" svgIcon="archive"></mat-icon>
+    <span>Archiver</span>
+  </button>
+</mat-menu>

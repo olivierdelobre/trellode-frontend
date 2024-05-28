@@ -1,0 +1,58 @@
+<div>
+  <div class="card-title-bar">
+    <div>
+      <h1 *ngIf="!showTitleInput" (click)="switchTitleInput()">
+        {{ card.title }}
+      </h1>
+      <input #titleInput class="card-title-input" mat-input *ngIf="showTitleInput" [(ngModel)]="titleContent" (keyup.enter)="updateCard()" (keyup.escape)="switchTitleInput()" [value]="card.title"/>
+      <div class="card-list-title">
+        Dans la liste...
+      </div>
+    </div>
+    <mat-icon class="close-popup-x pointer" svgIcon="close" (click)="cancel()"></mat-icon>
+  </div>
+  <div class="flex-row card-splitter">
+    <div class="left-column">
+      <h2>Description</h2>
+      <div class="comment-no-description" *ngIf="!showDescriptionInput && !card.description" (click)="switchDescriptionInput()">
+        Ajouter une description plus détaillée...
+        <br/>
+        <br/>
+      </div>
+      <div class="comment-description" *ngIf="!showDescriptionInput && card.description" (click)="switchDescriptionInput()" [innerHTML]="card.description"></div>
+      <div class="comment-description" *ngIf="showDescriptionInput">
+        <quill-editor [(ngModel)]="descriptionContent"></quill-editor>
+        <div>
+          <button mat-button class="primary" (click)="switchDescriptionInput()">Annuler</button>
+          <button mat-button class="primary" (click)="updateCard()">Enregistrer</button>
+        </div>
+      </div>
+      <h2>Commentaires</h2>
+      <div class="comment-fake-input" *ngIf="!showCommentInput" (click)="switchCommentInput()">
+        Ecrivez un commentaire...
+      </div>
+      <div class="comment-input" *ngIf="showCommentInput">
+        <quill-editor [(ngModel)]="commentContent">Ecrivez un commentaire...</quill-editor>
+        <div>
+          <button mat-button class="primary" (click)="switchCommentInput()">Annuler</button>
+          <button mat-button class="primary" (click)="addComment()">Enregistrer</button>
+        </div>
+      </div>
+      <div class="comments">
+        @for (comment of card.comments; track comment.id) {
+        <div>
+          <app-comment [comment]="comment"></app-comment>
+        </div>
+        }
+      </div>
+    </div>
+    <div class="right-column">
+      <div class="right-title">
+        Actions
+      </div>
+      <button mat-button class="primary" class="button-left" (click)="archiveCard()">
+        <mat-icon class="mat-icon" svgIcon="archive"></mat-icon> Archiver
+      </button>
+    </div>
+  </div>
+</div>
