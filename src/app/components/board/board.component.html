@@ -1,7 +1,7 @@
-<div class="fullpage-container">
-  <div class="board-bar">
+<div #fullPageContainer class="fullpage-container" [ngStyle]="{'background-image': board.background && board.background.data ? 'url('+board.background.data+')' : 'none'}">
+  <div class="board-bar" [ngStyle]="{'background-color': board.menuColorDark ? board.menuColorDark : 'rgb(0, 95, 150)'}">
     <div class="flex-row">
-      <div class="flex-row home pointer" [routerLink]="['/boards']">
+      <div class="flex-row home pointer" [routerLink]="['/boards']" [ngStyle]="{'background-color': board.menuColorLight ? board.menuColorLight : 'rgb(0, 79, 125)'}">
         <mat-icon class="mat-icon-big" style="fill: white ;" svgIcon="logo"></mat-icon>&nbsp; Trell<i>ode</i>
       </div>
       <div class="board-title">
@@ -9,12 +9,12 @@
       </div>
     </div>
     <div class="board-menu pointer">
-      <mat-icon class="mat-icon-big" style="fill: white;" svgIcon="dots" [matMenuTriggerFor]="menu"></mat-icon>
+      <mat-icon class="mat-icon-big" style="fill: white;" svgIcon="dots" (click)="switchRightMenu()"></mat-icon>
     </div>
   </div>
   <div class="lists-list">
     @for (list of board.lists; track board.id) {
-      <app-list [list]="list"></app-list>
+      <app-list [list]="list" [color]="board.listColor"></app-list>
     }
     <div *ngIf="!showCreateListInput" class="flex-row add-list-bar" (click)="switchCreateListInput()">
       <mat-icon class="mat-icon-md" style="fill: black;" svgIcon="plus"></mat-icon>
@@ -30,10 +30,46 @@
       </div>
     </div>
   </div>
+  <div class="right-menu" *ngIf="showRightMenu && !showManageBackground">
+    <div class="right-menu-header">
+      Menu
+      <div class="right-menu-close pointer">
+        <mat-icon class="mat-icon-big" svgIcon="close" (click)="switchRightMenu()"></mat-icon>
+      </div>
+    </div>
+    <div class="right-menu-buttons">
+      <button mat-menu-item class="right-menu-button" (click)="manageBackground()">
+        <mat-icon class="mat-icon-big mat-icon-right-menu" svgIcon="background"></mat-icon>
+        <span>Changer le fond d'écran</span>
+      </button>
+      <button mat-menu-item *ngIf="!board.archivedAt" class="right-menu-button" (click)="archiveBoard(board.id)">
+        <mat-icon class="mat-icon-big mat-icon-right-menu" svgIcon="archive"></mat-icon>
+        <span>Archiver</span>
+      </button>
+      <button mat-menu-item *ngIf="board.archivedAt" class="right-menu-button" (click)="reactivateBoard(board)">
+        <mat-icon class="mat-icon-big mat-icon-right-menu" svgIcon="unarchive"></mat-icon>
+        <span>Restaurer</span>
+      </button>
+    </div>
+  </div>
+  <div class="right-menu manage-background-menu" *ngIf="showManageBackground">
+    <div class="right-menu-header">
+      Changer le fond d'écran
+      <div class="right-menu-close pointer">
+        <mat-icon class="mat-icon-big" svgIcon="close" (click)="closeManageBackgroundMenu()"></mat-icon>
+      </div>
+    </div>
+    <div class="right-menu-content">
+      @for (background of backgrounds; track background.id) {
+        <div class="background-box">
+          <div class="background pointer" [ngStyle]="{'background-image': background.data ? 'url('+background.data+')' : 'none'}" (click)="setBoardBackground(background.id)"></div>
+          <div class="background-delete-button pointer">
+            <mat-icon class="mat-icon-big" svgIcon="close" (click)="deleteBackground(background.id)"></mat-icon>
+          </div>
+        </div>
+      }
+      <input hidden type="file" #uploader (change)="addBackground($event)"/>
+      <button mat-button class="primary" (click)="uploader.click()">Ajouter un fond d'écran</button>
+    </div>
+  </div>
 </div>
-<mat-menu #menu="matMenu">
-  <button mat-menu-item class="menu-button" (click)="archiveBoard(board.id)">
-    <mat-icon class="mat-icon" svgIcon="archive"></mat-icon>
-    <span>Archiver</span>
-  </button>
-</mat-menu>

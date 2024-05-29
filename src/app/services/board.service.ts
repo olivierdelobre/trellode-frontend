@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Board, List, Card, Comment } from '../models/models';
+import { Board, List, Card, Comment, Background } from '../models/models';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -17,9 +17,27 @@ export class BoardService {
     return this.http.get<Board>(`${this.apiUrl}/v1/boards/${id}`);
   }
 
-  getBoards(): Observable<Board[]> {
-    console.log("getting boards "+this.apiUrl);
-    return this.http.get<Board[]>(`${this.apiUrl}/v1/boards`);
+  getBoards(archived: boolean): Observable<Board[]> {
+    let suffix = ""
+    if (archived) {
+      suffix = "?archived=1"
+    }
+    return this.http.get<Board[]>(`${this.apiUrl}/v1/boards${suffix}`);
+  }
+
+  getBackgrounds(): Observable<Background[]> {
+    return this.http.get<Background[]>(`${this.apiUrl}/v1/backgrounds`);
+  }
+
+  createBackground(uploadData: any): Observable<Background> {
+    let headers = new HttpHeaders()
+            .set('Content-Type', 'text/plain')
+            .set('Accept', 'application/json');
+    return this.http.post<Background>(`${this.apiUrl}/v1/backgrounds`, {data: uploadData}, {headers: headers});
+  }
+
+  deleteBackground(backgroundId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/v1/backgrounds/${backgroundId}`);
   }
 
   createBoard(board: Board): Observable<Board> {

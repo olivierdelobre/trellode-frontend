@@ -19,6 +19,7 @@ export class ListComponent implements OnInit {
     createdAt: new Date(),
     updatedAt: new Date()
   };
+  @Input() color: string = '';
 
   showCreateCardInput: boolean = false;
   newCardTitleContent: string = '';

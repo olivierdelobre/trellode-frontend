@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BoardService } from '../../services/board.service';
-import { Board, List } from '../../models/models';
+import { Background, Board, List } from '../../models/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BroadcastService } from 'src/app/services/broadcast.service';
 import { MiscService } from 'src/app/services/misc.service';
@@ -16,14 +16,28 @@ export class BoardComponent implements OnInit {
     id: 0,
     userId: 0,
     title: '',
-    backgroundImage: '',
+    background: {
+      id: 0,
+      data: ''
+    },
     lists: [],
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
+    menuColorDark: '',
+    menuColorLight: '',
+    listColor: '',
+    backgroundId: 0,
+    archivedAt: new Date(0)
   };
+  backgrounds: Background[] = [];
   showCreateListInput: boolean = false;
+  showRightMenu: boolean = false;
+  showManageBackground: boolean = false;
   newListTitleContent: string = '';
+  selectedFile: File | null = null;
+  base64String: string | null = null;
   @ViewChild('listTitleInput') listTitleInput: any;
+  @ViewChild('fullPageContainer') fullPageContainer: any;
 
   constructor(private route: ActivatedRoute,
     private boardService: BoardService,
@@ -138,6 +152,14 @@ export class BoardComponent implements OnInit {
     }
   }
 
+  switchRightMenu() {
+    this.showRightMenu = !this.showRightMenu;
+  }
+
+  closeManageBackgroundMenu() {
+    this.showManageBackground = false;
+  }
+
   archiveBoard(boardId: number): void {
     this.boardService.archiveBoard(boardId).subscribe({
       next: () => {
@@ -157,6 +179,132 @@ export class BoardComponent implements OnInit {
         }
       }
     });
+  }
+
+  reactivateBoard(board: Board): void {
+    board.archivedAt = new Date(0);
+    this.boardService.updateBoard(board).subscribe({
+      next: () => {
+        let msg = {
+          what: 'MESSAGES.BOARD_REACTIVATED',
+        };
+        this.miscService.openSnackBar('success', msg);
+        this.broadcastService.updateRefreshBoard(true);
+      },
+      error: (error) => {
+        if (error.error.error) {
+          this.miscService.openSnackBar('failure', error.error.error);
+        }
+        else {
+          this.miscService.openSnackBar('failure', { what: 'unexpected' });
+        }
+      }
+    });
+  }
+
+  manageBackground() {
+    this.showManageBackground = true;
+    this.loadBackgrounds();
+  }
+
+  loadBackgrounds() { 
+    this.boardService.getBackgrounds().subscribe({
+      next: (data: any) => {
+        this.backgrounds = data;
+      },
+      error: (error) => {
+        if (error.error.error) {
+          this.miscService.openSnackBar('failure', error.error.error);
+        }
+        else {
+          this.miscService.openSnackBar('failure', { what: 'unexpected' });
+        }
+      }
+    });
+  }
+
+  setBoardBackground(id: number): void {
+    this.board.backgroundId = id;
+    this.updateBoard(this.board);
+  }
+
+  updateBoard(board: Board): void {
+    this.boardService.updateBoard(board).subscribe({
+      next: () => {
+        let msg = {
+          what: 'MESSAGES.BOARD_UPDATED',
+        };
+        this.miscService.openSnackBar('success', msg);
+        this.broadcastService.updateRefreshBoard(true);
+      },
+      error: (error) => {
+        if (error.error.error) {
+          this.miscService.openSnackBar('failure', error.error.error);
+        }
+        else {
+          this.miscService.openSnackBar('failure', { what: 'unexpected' });
+        }
+      }
+    });
+  }
+
+  deleteBackground(id: number): void {
+    this.boardService.deleteBackground(id).subscribe({
+      next: () => {
+        let msg = {
+          what: 'MESSAGES.BACKGROUND_DELETED',
+        };
+        this.miscService.openSnackBar('success', msg);
+        this.broadcastService.updateRefreshBoard(true);
+        this.loadBackgrounds();
+      },
+      error: (error) => {
+        //console.log(error.error.detail);
+        if (error.error.detail) {
+          this.miscService.openSnackBar('failure', error.error.detail);
+        }
+        else {
+          this.miscService.openSnackBar('failure', { what: 'unexpected' });
+        }
+      }
+    });
+  }
+
+  addBackground(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+      this.createBackground(this.selectedFile);
+    }
+  }
+
+  uploadFile($event: any) {
+    console.log($event.target.files[0]); // outputs the first file
+  }
+
+  createBackground(file: File) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.base64String = reader.result as string;
+      this.boardService.createBackground(this.base64String).subscribe({
+        next: () => {
+          let msg = {
+            what: 'MESSAGES.BACKGROUND_CREATED',
+          };
+          this.miscService.openSnackBar('success', msg);
+          this.loadBackgrounds();
+        },
+        error: (error) => {
+          if (error.error.error) {
+            this.miscService.openSnackBar('failure', error.error.error);
+          }
+          else {
+            this.miscService.openSnackBar('failure', { what: 'unexpected' });
+          }
+        }
+      });
+    };
+    reader.readAsDataURL(file);
   }
 }
 

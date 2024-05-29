@@ -3,14 +3,24 @@ export interface User {
   email: string;
 }
 
+export interface Background {
+  id: number;
+  data: string;
+}
+
 export interface Board {
   id: number;
   userId: number;
   title: string;
-  backgroundImage: string;
+  backgroundId: number;
+  background: Background;
+  menuColorDark: string;
+  menuColorLight: string;
+  listColor: string;
   lists: List[];
   createdAt: Date;
   updatedAt: Date;
+  archivedAt: Date;
 }
 
 export interface List {

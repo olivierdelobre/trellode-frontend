@@ -4,17 +4,28 @@
       <div class="flex-row home pointer" [routerLink]="['/boards']">
         <mat-icon class="mat-icon-big" style="fill: #303030 ;" svgIcon="logo"></mat-icon>&nbsp; Trell<i>ode</i>
       </div>
-      <div class="board-title">
-        Tous vos tableaux
-      </div>
-      <div class="create-board-button">
-        <button mat-button (click)="openBoardForm()">Créer un tableau</button>
+      <div class="flex-row board-buttons">
+        <div class="board-title pointer" [routerLink]="['/boards']">
+          Tous vos tableaux
+        </div>
+        <div class="board-title pointer" [routerLink]="['/boards']" [queryParams]="{archived: 1}">
+          Vos tableaux archivés
+        </div>
+        <div class="create-board-button">
+          <button mat-button (click)="openBoardForm()">Créer un tableau</button>
+        </div>
       </div>
     </div>
   </div>
   <div class="boards-list">
+  @if (count == 0) {
+    Aucun tableau
+  }
+  @if (count == -1) {
+    <mat-spinner [diameter]="30"></mat-spinner>
+  }
   @for (board of boards; track board.id) {
-    <div class="board" [routerLink]="['/boards/', board.id]">
+    <div class="board" [routerLink]="['/boards/', board.id]" [ngStyle]="{'background-image': board.background && board.background.data ? 'url('+board.background.data+')' : 'none'}">
       <div class="title">{{ board.title }}</div>
     </div>
   }

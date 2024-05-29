@@ -27,19 +27,24 @@
     font-weight: 600;
 }
 
+.board-buttons {
+    padding-left: 25px;
+}
+
 .board-title {
     color: #303030;
     font-size: 14px;
     font-weight: 600;
-    margin-left: 16px;
-}
+    margin-right: 25px;
 
-.create-board-button {
-    margin-left: 30px;
+    &:hover {
+        color: #808080;
+    }
 }
 
 .board {
     background-color: rgb(0, 121, 191) !important;
+    background-size: cover;
     border-radius: 3px;
     margin: 0 10px 10px 0;
     padding: 10px;

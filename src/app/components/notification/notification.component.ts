@@ -15,17 +15,18 @@ export class NotificationComponent implements OnInit {
     @Inject(MAT_SNACK_BAR_DATA) public data: any) { }
 
   ngOnInit(): void {
-    if (this.data.what.startsWith('MESSAGES.')) {
+    if (this.data?.what?.startsWith('MESSAGES.')) {
       this.translateService.get(this.data.what).subscribe((res: string) => {
         this.text = res;
       });
     }
-    else if (this.data.what == 'failure') {
+    else if (this.data?.what == 'failure') {
       this.text = this.data.errormsg;
     }
     else {
+      //console.log("else "+this.data);
       let splited = String(this.data).split("|");
-      this.text = splited.join("<br />");
+      this.text = this.data;//splited.join("<br />");
     }
   }
 }

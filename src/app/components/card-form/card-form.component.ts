@@ -48,7 +48,6 @@ export class CardFormComponent implements OnInit {
     private miscService: MiscService,
     private broadcastService: BroadcastService) {
       this.card = data.card;
-      console.log("card="+JSON.stringify(this.card));
   }
 
   ngOnInit(): void {

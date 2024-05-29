@@ -29,6 +29,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QuillModule } from 'ngx-quill'
 import { BroadcastService } from './services/broadcast.service';
 import { BoardFormComponent } from './components/board-form/board-form.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 
 @NgModule({
     declarations: [
@@ -59,7 +61,8 @@ import { BoardFormComponent } from './components/board-form/board-form.component
         MatButtonModule,
         MatIconModule,
         MatMenuModule,
-        MatDialogModule
+        MatDialogModule,
+        MatProgressSpinnerModule
     ],
     exports: [
         MatButtonModule,

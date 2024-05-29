@@ -52,7 +52,6 @@ export class BoardFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleContent = this.board.title;
-    this.backgroundImage = this.board.backgroundImage;
   }
 
   loadBoard(): void {
