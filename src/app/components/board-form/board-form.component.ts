@@ -126,7 +126,8 @@ export class BoardFormComponent implements OnInit {
   }
 
   archiveBoard() {
-    this.archiveBoardSubscription = this.boardService.archiveBoard(this.board.id).subscribe({
+    this.board.archivedAt = new Date();
+    this.archiveBoardSubscription = this.boardService.updateBoard(this.board).subscribe({
       next: (data: any) => {
         let msg = {
           what: 'MESSAGES.BOARD_ARCHIVED',

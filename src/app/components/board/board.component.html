@@ -30,7 +30,7 @@
       </div>
     </div>
   </div>
-  <div class="right-menu" *ngIf="showRightMenu && !showManageBackground">
+  <div class="right-menu" *ngIf="showRightMenu && !showManageBackground && !showLogs">
     <div class="right-menu-header">
       Menu
       <div class="right-menu-close pointer">
@@ -42,13 +42,21 @@
         <mat-icon class="mat-icon-big mat-icon-right-menu" svgIcon="background"></mat-icon>
         <span>Changer le fond d'écran</span>
       </button>
-      <button mat-menu-item *ngIf="!board.archivedAt" class="right-menu-button" (click)="archiveBoard(board.id)">
+      <button mat-menu-item class="right-menu-button" (click)="showLogsMenu()">
+        <mat-icon class="mat-icon-big mat-icon-right-menu" svgIcon="activity"></mat-icon>
+        <span>Activité</span>
+      </button>
+      <button mat-menu-item *ngIf="!board.archivedAt" class="right-menu-button" (click)="archiveBoard(board)">
         <mat-icon class="mat-icon-big mat-icon-right-menu" svgIcon="archive"></mat-icon>
         <span>Archiver</span>
       </button>
       <button mat-menu-item *ngIf="board.archivedAt" class="right-menu-button" (click)="reactivateBoard(board)">
         <mat-icon class="mat-icon-big mat-icon-right-menu" svgIcon="unarchive"></mat-icon>
         <span>Restaurer</span>
+      </button>
+      <button mat-menu-item *ngIf="board.archivedAt" class="right-menu-button" (click)="deleteBoard(board.id)">
+        <mat-icon class="mat-icon-big mat-icon-right-menu" svgIcon="delete"></mat-icon>
+        <span>Supprimer</span>
       </button>
     </div>
   </div>
@@ -70,6 +78,31 @@
       }
       <input hidden type="file" #uploader (change)="addBackground($event)"/>
       <button mat-button class="primary" (click)="uploader.click()">Ajouter un fond d'écran</button>
+    </div>
+  </div>
+  <div class="right-menu manage-background-menu" *ngIf="showLogs">
+    <div class="right-menu-header">
+      Activité
+      <div class="right-menu-close pointer">
+        <mat-icon class="mat-icon-big" svgIcon="close" (click)="closeLogsMenu()"></mat-icon>
+      </div>
+    </div>
+    <div class="right-menu-content">
+      @for (log of logs; track log.id) {
+        <div class="log-box">
+          <div class="flex-row">
+            <div class="log-username">
+              {{log.user.firstname}} {{log.user.lastname}}
+            </div>
+            <div>
+              &nbsp;a {{log.action}} <span class="log-action-target-title pointer" (click)="showActionTarget(log)">{{log.actionTargetTitle}}</span>
+            </div>
+          </div>
+          <div class="log-date">
+            {{log.createdAt | date: 'dd/MM/yyyy à HH:mm:ss'}}
+          </div>
+        </div>
+      }
     </div>
   </div>
 </div>

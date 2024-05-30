@@ -85,6 +85,7 @@ export class BoardsComponent implements OnInit {
       backgroundId: 0,
       archivedAt: new Date(0)
     };
+    this.archived = "";
     this.boardService.createBoard(newBoard).subscribe(() => {
       this.loadBoards(this.archived == "1");
     });

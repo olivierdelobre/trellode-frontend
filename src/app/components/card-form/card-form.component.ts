@@ -17,6 +17,7 @@ import { BroadcastService } from 'src/app/services/broadcast.service';
 export class CardFormComponent implements OnInit {
 
   card: any;
+  cardId: number = 0;
   namePattern: string = '^[A-Za-z\\._\\-\\d]{3,20}$';
   camiprodRfidPattern: string = '^[A-Z\\d]{14,16}$';
   loggedUserInfo: any = {};
@@ -43,11 +44,26 @@ export class CardFormComponent implements OnInit {
     public dialogRef: MatDialogRef<CardFormComponent>,
     public boardService: BoardService,
     public cdr: ChangeDetectorRef,
-    @Inject(MAT_DIALOG_DATA) public data: CardComponent,
+    @Inject(MAT_DIALOG_DATA) public data: CardFormComponent,
     public router: Router,
     private miscService: MiscService,
     private broadcastService: BroadcastService) {
       this.card = data.card;
+      if (this.card == null && data.cardId != 0) {
+        this.boardService.getCard(data.cardId).subscribe({
+          next: (data: any) => {
+            this.card = data;
+          },
+          error: (error) => {
+            if (error.error.error) {
+              this.miscService.openSnackBar('failure', error.error.error);
+            }
+            else {
+              this.miscService.openSnackBar('failure', { what: 'unexpected' });
+            }
+          }
+        });
+      }
   }
 
   ngOnInit(): void {
@@ -143,10 +159,34 @@ export class CardFormComponent implements OnInit {
   }
 
   archiveCard() {
-    this.archiveCardSubscription = this.boardService.archiveCard(this.card.id).subscribe({
+    this.card.archivedAt = new Date();
+    this.archiveCardSubscription = this.boardService.updateCard(this.card).subscribe({
       next: (data: any) => {
         let msg = {
           what: 'MESSAGES.CARD_ARCHIVED',
+        };
+        this.miscService.openSnackBar('success', msg);
+        this.onSuccess.emit();
+        this.broadcastService.updateRefreshBoard(true);
+        this.dialogRef.close();
+      },
+      error: (error) => {
+        if (error.error.error) {
+          this.miscService.openSnackBar('failure', error.error.error);
+        }
+        else {
+          this.miscService.openSnackBar('failure', { what: 'unexpected' });
+        }
+      }
+    })
+  }
+
+  reactivateCard() {
+    this.card.archivedAt = new Date(0);
+    this.archiveCardSubscription = this.boardService.updateCard(this.card).subscribe({
+      next: (data: any) => {
+        let msg = {
+          what: 'MESSAGES.CARD_REACTIVATED',
         };
         this.miscService.openSnackBar('success', msg);
         this.onSuccess.emit();

@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BoardService } from '../../services/board.service';
-import { Background, Board, List } from '../../models/models';
+import { Background, Board, List, Log } from '../../models/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BroadcastService } from 'src/app/services/broadcast.service';
 import { MiscService } from 'src/app/services/misc.service';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import { CardFormComponent } from '../card-form/card-form.component';
 
 @Component({
   selector: 'app-board',
@@ -30,9 +32,11 @@ export class BoardComponent implements OnInit {
     archivedAt: new Date(0)
   };
   backgrounds: Background[] = [];
+  logs: Log[] = [];
   showCreateListInput: boolean = false;
   showRightMenu: boolean = false;
   showManageBackground: boolean = false;
+  showLogs: boolean = false;
   newListTitleContent: string = '';
   selectedFile: File | null = null;
   base64String: string | null = null;
@@ -43,7 +47,9 @@ export class BoardComponent implements OnInit {
     private boardService: BoardService,
     private broadcastService: BroadcastService,
     private miscService: MiscService,
-    private router: Router) {}
+    private router: Router,
+    public dialog: MatDialog,
+    public dialogRef: MatDialogRef<CardFormComponent>) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(
@@ -65,10 +71,36 @@ export class BoardComponent implements OnInit {
   }
 
   loadBoard(): void {
-    this.boardService.getBoard(this.boardId).subscribe(
-      (data: any) => {
+    this.boardService.getBoard(this.boardId).subscribe({
+      next: (data: any) => {
         this.board = data;
-      });
+        this.loadLogs(this.boardId);
+      },
+      error: (error) => {
+        if (error.error.error) {
+          this.miscService.openSnackBar('failure', error.error.error);
+        }
+        else {
+          this.miscService.openSnackBar('failure', { what: 'unexpected' });
+        }
+      } 
+    });
+  }
+
+  loadLogs(boardId: number): void {
+    this.boardService.getLogs(boardId).subscribe({
+      next: (data: any) => {
+        this.logs = data;
+      },
+      error: (error) => {
+        if (error.error.error) {
+          this.miscService.openSnackBar('failure', error.error.error);
+        }
+        else {
+          this.miscService.openSnackBar('failure', { what: 'unexpected' });
+        }
+      } 
+    });
   }
 
   addList(): void {
@@ -79,7 +111,8 @@ export class BoardComponent implements OnInit {
       position: 0,
       cards: [],
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
+      archivedAt: new Date(0)
     };
 
     this.boardService.createList(this.boardId, newList).subscribe({
@@ -123,24 +156,9 @@ export class BoardComponent implements OnInit {
     });
   }
 
-  archiveList(listId: number): void {
-    this.boardService.archiveList(listId).subscribe({
-      next: () => {
-        let msg = {
-          what: 'MESSAGES.LIST_ARCHIVED',
-        };
-        this.miscService.openSnackBar('success', msg);
-        this.loadBoard();
-      },
-      error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
-        }
-        else {
-          this.miscService.openSnackBar('failure', { what: 'unexpected' });
-        }
-      }
-    });
+  archiveList(list: List): void {
+    list.archivedAt = new Date();
+    this.updateList(list);
   }
 
   switchCreateListInput() {
@@ -160,14 +178,22 @@ export class BoardComponent implements OnInit {
     this.showManageBackground = false;
   }
 
-  archiveBoard(boardId: number): void {
-    this.boardService.archiveBoard(boardId).subscribe({
+  showLogsMenu() {
+    this.showLogs = true;
+  }
+
+  closeLogsMenu() {
+    this.showLogs = false;
+  }
+
+  archiveBoard(board: Board): void {
+    board.archivedAt = new Date();
+    this.boardService.updateBoard(board).subscribe({
       next: () => {
         let msg = {
           what: 'MESSAGES.BOARD_ARCHIVED',
         };
         this.miscService.openSnackBar('success', msg);
-        this.router.navigate(['/boards']);
         this.broadcastService.updateRefreshBoard(true);
       },
       error: (error) => {
@@ -202,9 +228,35 @@ export class BoardComponent implements OnInit {
     });
   }
 
+  deleteBoard(boardId: number): void {
+    this.boardService.deleteBoard(boardId).subscribe({
+      next: () => {
+        let msg = {
+          what: 'MESSAGES.BOARD_DELETED',
+        };
+        this.miscService.openSnackBar('success', msg);
+        this.router.navigate(['/boards']);
+        this.broadcastService.updateRefreshBoard(true);
+      },
+      error: (error) => {
+        if (error.error.error) {
+          this.miscService.openSnackBar('failure', error.error.error);
+        }
+        else {
+          this.miscService.openSnackBar('failure', { what: 'unexpected' });
+        }
+      }
+    });
+  }
+
   manageBackground() {
     this.showManageBackground = true;
     this.loadBackgrounds();
+  }
+
+  displayLogs() {
+    this.showLogs = true;
+    this.loadLogs(this.board.id);
   }
 
   loadBackgrounds() { 
@@ -305,6 +357,18 @@ export class BoardComponent implements OnInit {
       });
     };
     reader.readAsDataURL(file);
+  }
+
+  showActionTarget(log: Log) {
+    if (log.action.match(/card$/i)) {
+      const config: MatDialogConfig = {
+        panelClass: 'lg-popup',
+        backdropClass: 'preview-popup-backdrop',
+        data: { card: null, cardId: log.actionTargetId }
+      };
+  
+      this.dialogRef = this.dialog.open(CardFormComponent, config);
+    }
   }
 }
 

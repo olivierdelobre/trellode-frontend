@@ -3,6 +3,7 @@ import { BoardService } from '../../services/board.service';
 import { Card, Comment } from '../../models/models';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { CardFormComponent } from '../card-form/card-form.component';
+import { MiscService } from 'src/app/services/misc.service';
 
 @Component({
   selector: 'app-card',
@@ -18,12 +19,14 @@ export class CardComponent implements OnInit {
     position: 0,
     comments: [],
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
+    archivedAt: new Date(0)
   };
 
   constructor(private boardService: BoardService,
     public dialog: MatDialog,
-    public dialogRef: MatDialogRef<CardFormComponent>) {}
+    public dialogRef: MatDialogRef<CardFormComponent>,
+    private miscService: MiscService) {}
 
   ngOnInit(): void {
     
@@ -37,14 +40,34 @@ export class CardComponent implements OnInit {
   }
 
   updateCard(card: Card): void {
-    this.boardService.updateCard(card).subscribe(() => {
-      this.loadCard();
+    this.boardService.updateCard(card).subscribe({
+      next: () => {
+        this.loadCard();
+      },
+      error: (error) => {
+        if (error.error.error) {
+          this.miscService.openSnackBar('failure', error.error.error);
+        }
+        else {
+          this.miscService.openSnackBar('failure', { what: 'unexpected' });
+        }
+      }
     });
   }
 
-  archiveCard(cardId: number): void {
-    this.boardService.archiveCard(cardId).subscribe(() => {
-      this.loadCard();
+  archiveCard(card: Card): void {
+    this.boardService.updateCard(card).subscribe({
+      next: () => {
+        this.loadCard();
+      },
+      error: (error) => {
+        if (error.error.error) {
+          this.miscService.openSnackBar('failure', error.error.error);
+        }
+        else {
+          this.miscService.openSnackBar('failure', { what: 'unexpected' });
+        }
+      }
     });
   }
 

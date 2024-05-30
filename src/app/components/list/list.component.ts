@@ -17,7 +17,8 @@ export class ListComponent implements OnInit {
     position: 0,
     cards: [],
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
+    archivedAt: new Date(0)
   };
   @Input() color: string = '';
 
@@ -59,7 +60,8 @@ export class ListComponent implements OnInit {
       position: 0,
       comments: [],
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
+      archivedAt: new Date(0)
     };
     this.boardService.createCard(this.list.id, newCard).subscribe({
       next: () => {
@@ -78,8 +80,9 @@ export class ListComponent implements OnInit {
     });
   }
 
-  archiveList(listId: number): void {
-    this.boardService.archiveList(listId).subscribe({
+  archiveList(list: List): void {
+    list.archivedAt = new Date();
+    this.boardService.updateList(list).subscribe({
       next: () => {
         let msg = {
           what: 'MESSAGES.LIST_ARCHIVED',

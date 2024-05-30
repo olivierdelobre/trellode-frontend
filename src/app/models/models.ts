@@ -1,6 +1,8 @@
 export interface User {
   id: number;
   email: string;
+  firstname: string;
+  lastname: string;
 }
 
 export interface Background {
@@ -31,6 +33,7 @@ export interface List {
   cards: Card[];
   createdAt: Date;
   updatedAt: Date;
+  archivedAt: Date;
 }
 
 export interface Card {
@@ -42,6 +45,7 @@ export interface Card {
   comments: Comment[];
   createdAt: Date;
   updatedAt: Date;
+  archivedAt: Date;
 }
 
 export interface Comment {
@@ -51,4 +55,22 @@ export interface Comment {
   content: string;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface Log {
+  id: number;
+  userId: number;
+  user: User;
+  boardId: number;
+  action: string;
+  actionTargetId: number;
+  actionTargetTitle: string;
+  changes: LogChange[];
+  createdAt: Date;
+}
+
+export interface LogChange {
+  field: string;
+  fromValue: string;
+  toValue: string;
 }

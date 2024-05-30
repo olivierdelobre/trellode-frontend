@@ -5,9 +5,6 @@
         {{ card.title }}
       </h1>
       <input #titleInput class="card-title-input" mat-input *ngIf="showTitleInput" [(ngModel)]="titleContent" (keyup.enter)="updateCard()" (keyup.escape)="switchTitleInput()" [value]="card.title"/>
-      <div class="card-list-title">
-        Dans la liste...
-      </div>
     </div>
     <mat-icon class="close-popup-x pointer" svgIcon="close" (click)="cancel()"></mat-icon>
   </div>
@@ -50,8 +47,14 @@
       <div class="right-title">
         Actions
       </div>
-      <button mat-button class="primary" class="button-left" (click)="archiveCard()">
+      <button mat-button *ngIf="card.archivedAt == null" class="primary" class="button-left" (click)="archiveCard()">
         <mat-icon class="mat-icon" svgIcon="archive"></mat-icon> Archiver
+      </button>
+      <button mat-button *ngIf="card.archivedAt != null" class="primary" class="button-left" (click)="reactivateCard()">
+        <mat-icon class="mat-icon" svgIcon="unarchive"></mat-icon> Restaurer
+      </button>
+      <button mat-button class="primary" class="button-left">
+        <mat-icon class="mat-icon" svgIcon="checklist"></mat-icon> Checklist
       </button>
     </div>
   </div>

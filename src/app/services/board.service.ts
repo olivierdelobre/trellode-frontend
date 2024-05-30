@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Board, List, Card, Comment, Background } from '../models/models';
+import { Board, List, Card, Comment, Background, Log } from '../models/models';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -48,7 +48,7 @@ export class BoardService {
     return this.http.put<Board>(`${this.apiUrl}/v1/boards/${board.id}`, board);
   }
 
-  archiveBoard(boardId: number): Observable<void> {
+  deleteBoard(boardId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/v1/boards/${boardId}`);
   }
 
@@ -65,7 +65,7 @@ export class BoardService {
     return this.http.put<List>(`${this.apiUrl}/v1/lists/${list.id}`, list);
   }
 
-  archiveList(listId: number): Observable<void> {
+  deleteList(listId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/v1/lists/${listId}`);
   }
 
@@ -82,7 +82,7 @@ export class BoardService {
     return this.http.put<Card>(`${this.apiUrl}/v1/cards/${card.id}`, card);
   }
 
-  archiveCard(cardId: number): Observable<void> {
+  deleteCard(cardId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/v1/cards/${cardId}`);
   }
 
@@ -105,6 +105,10 @@ export class BoardService {
 
   deleteComment(commentId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/v1/comments/${commentId}`);
+  }
+
+  getLogs(boardId: number): Observable<Log[]> {
+    return this.http.get<Log[]>(`${this.apiUrl}/v1/logs?boardid=${boardId}`);
   }
 }
 
