@@ -59,3 +59,31 @@
         outline: none;
     }
 }
+
+.example-list {
+  width: 200px;
+  max-width: 100%;
+  margin: 0 auto;
+  background: #f7f7f7;
+  border: solid 1px #ccc;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.example-box {
+  padding: 20px;
+  margin-bottom: 10px;
+  border: solid 1px #ccc;
+  color: #555;
+  background: white;
+  border-radius: 4px;
+  cursor: move;
+  text-align: center;
+}
+
+.example-box:last-child {
+  margin-bottom: 0;
+}

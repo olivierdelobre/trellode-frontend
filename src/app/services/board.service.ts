@@ -110,5 +110,9 @@ export class BoardService {
   getLogs(boardId: number): Observable<Log[]> {
     return this.http.get<Log[]>(`${this.apiUrl}/v1/logs?boardid=${boardId}`);
   }
+
+  changeCardOrder(listId: number, idsOrdered: string) {
+    return this.http.put(`${this.apiUrl}/v1/lists/${listId}/order/${idsOrdered}`, {});
+  }
 }
 

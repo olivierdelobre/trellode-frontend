@@ -30,6 +30,8 @@ import { QuillModule } from 'ngx-quill'
 import { BroadcastService } from './services/broadcast.service';
 import { BoardFormComponent } from './components/board-form/board-form.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { DraggableModule } from './draggable/draggable.module';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 @NgModule({
@@ -49,6 +51,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
         BrowserModule,
         TranslateModule.forRoot(),
         QuillModule.forRoot(),
+        DragDropModule,
         RouterModule,
         AppRoutingModule,
         BrowserAnimationsModule,
@@ -62,7 +65,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
         MatIconModule,
         MatMenuModule,
         MatDialogModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        DraggableModule
     ],
     exports: [
         MatButtonModule,

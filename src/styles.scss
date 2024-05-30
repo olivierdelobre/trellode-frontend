@@ -152,3 +152,12 @@ a.button {
 .mat-icon-right-menu {
     margin-right: 10px !important;
 }
+
+.draggable {
+  cursor: move;
+  user-select: none;
+}
+
+.movable:not(.dragging) {
+  transition: transform 300ms ease-in-out;
+}

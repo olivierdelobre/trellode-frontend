@@ -3,6 +3,8 @@ import { BoardService } from '../../services/board.service';
 import { List, Card } from '../../models/models';
 import { MiscService } from 'src/app/services/misc.service';
 import { BroadcastService } from 'src/app/services/broadcast.service';
+import { SortEvent } from 'src/app/draggable/sortable-list.directive';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-list',
@@ -21,6 +23,8 @@ export class ListComponent implements OnInit {
     archivedAt: new Date(0)
   };
   @Input() color: string = '';
+  items = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
+  cards: Card[] = [];
 
   showCreateCardInput: boolean = false;
   newCardTitleContent: string = '';
@@ -32,7 +36,7 @@ export class ListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    
+    this.cards = this.list.cards;
   }
 
   loadList(): void {
@@ -105,6 +109,24 @@ export class ListComponent implements OnInit {
   updateList(list: List): void {
     this.boardService.updateList(list).subscribe(() => {
       this.loadList();
+    });
+  }
+
+  drop(event: CdkDragDrop<Card[]>) {
+    moveItemInArray(this.cards, event.previousIndex, event.currentIndex);
+    console.log("after="+JSON.stringify(this.cards));
+    this.boardService.changeCardOrder(this.list.id, this.cards.map(card => card.id).join(',')).subscribe({
+      next: () => {
+        this.loadList();
+      },
+      error: (error) => {
+        if (error.error.error) {
+          this.miscService.openSnackBar('failure', error.error.error);
+        }
+        else {
+          this.miscService.openSnackBar('failure', { what: 'unexpected' });
+        }
+      }
     });
   }
 }

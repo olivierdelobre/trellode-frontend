@@ -13,7 +13,7 @@
     </div>
   </div>
   <div class="lists-list">
-    @for (list of board.lists; track board.id) {
+    @for (list of board.lists; track list.id) {
       <app-list [list]="list" [color]="board.listColor"></app-list>
     }
     <div *ngIf="!showCreateListInput" class="flex-row add-list-bar" (click)="switchCreateListInput()">

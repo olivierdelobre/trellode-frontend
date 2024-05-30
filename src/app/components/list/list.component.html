@@ -3,8 +3,12 @@
     <div class="title">{{ list.title }}</div>
     <mat-icon class="mat-icon list-menu" svgIcon="dots" class="pointer" [matMenuTriggerFor]="menu"></mat-icon>
   </div>
-  <div *ngFor="let card of list.cards" class="board">
-    <app-card [card]="card"></app-card>
+  <div cdkDropList (cdkDropListDropped)="drop($event)">
+    @for (card of cards; track card.id) {
+    <div class="card-item" cdkDrag>
+      <app-card [card]="card"></app-card>
+    </div>
+    }
   </div>
   <div *ngIf="showCreateCardInput">
     <div class="card">

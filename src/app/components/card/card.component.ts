@@ -90,6 +90,7 @@ export class CardComponent implements OnInit {
   }
 
   openCardForm() {
+    return; //FIXME
     // Pass clone to avoid data being modified in service detail component
     const config: MatDialogConfig = {
       panelClass: 'lg-popup',

@@ -6,6 +6,7 @@ import { BroadcastService } from 'src/app/services/broadcast.service';
 import { MiscService } from 'src/app/services/misc.service';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { CardFormComponent } from '../card-form/card-form.component';
+import { SortEvent } from '../../draggable/sortable-list.directive';
 
 @Component({
   selector: 'app-board',
