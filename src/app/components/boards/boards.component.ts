@@ -7,6 +7,7 @@ import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dial
 import { BoardFormComponent } from '../board-form/board-form.component';
 import { BroadcastService } from 'src/app/services/broadcast.service';
 import { Subscription } from 'rxjs/internal/Subscription';
+import { MiscService } from 'src/app/services/misc.service';
 
 @Component({
   selector: 'app-boards',
@@ -15,12 +16,13 @@ import { Subscription } from 'rxjs/internal/Subscription';
 })
 export class BoardsComponent implements OnInit {
   boards: Board[] = [];
+  recentBoards: Board[] = [];
   board: Board = {
-    id: 0,
-    userId: 0,
+    id: "",
+    userId: "",
     title: '',
     background: {
-      id: 0,
+      id: "",
       data: ''
     },
     lists: [],
@@ -29,8 +31,9 @@ export class BoardsComponent implements OnInit {
     menuColorDark: '',
     menuColorLight: '',
     listColor: '',
-    backgroundId: 0,
-    archivedAt: new Date(0)
+    backgroundId: "",
+    archivedAt: new Date(0),
+    openedAt: new Date(),
   };
   newBoardTitleContent: string = '';
   archived: string = "";
@@ -42,13 +45,22 @@ export class BoardsComponent implements OnInit {
     private broadcastService: BroadcastService,
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<BoardFormComponent>,
-    private route: ActivatedRoute) {}
+    private route: ActivatedRoute,
+    private miscService: MiscService) {}
 
   ngOnInit(): void {
     this.broadcastService.refreshBoard.subscribe({
       next: (data: any) => {
         if (data) {
           this.loadBoards(this.archived == "1");
+        }
+      },
+      error: (error) => {
+        if (error.error.error) {
+          this.miscService.openSnackBar('failure', error.error.error);
+        }
+        else {
+          this.miscService.openSnackBar('failure', { what: 'unexpected' });
         }
       }
     });
@@ -60,20 +72,49 @@ export class BoardsComponent implements OnInit {
   }
 
   loadBoards(archived: boolean): void {
-    this.boardService.getBoards(archived).subscribe(
-      (data: any) => {
+    this.boardService.getBoards(archived).subscribe({
+      next: (data: any) => {
         this.boards = data;
         this.count = this.boards.length;
-      });
+
+        this.recentBoards = [];
+        for (let board of this.boards) {
+          this.recentBoards.push(board);
+        }
+
+        // sort this.boards by openedAt
+        this.recentBoards.sort((a, b) => {
+          if (a.openedAt > b.openedAt) {
+            return -1;
+          }
+          if (a.openedAt < b.openedAt) {
+            return 1;
+          }
+          return 0;
+        });
+        // only keep 4 first elements of this.recentBoards
+        if (this.boards.length > 4) {
+          this.recentBoards = this.recentBoards.slice(0, 4);
+        }
+      },
+      error: (error) => {
+        if (error.error.error) {
+          this.miscService.openSnackBar('failure', error.error.error);
+        }
+        else {
+          this.miscService.openSnackBar('failure', { what: 'unexpected' });
+        }
+      }
+    });
   }
 
   addBoard(): void {
     let newBoard: Board = {
-      id: 0,
-      userId: 0,
+      id: "",
+      userId: "",
       title: this.newBoardTitleContent,
       background: {
-        id: 0,
+        id: "",
         data: ''
       },
       lists: [],
@@ -82,8 +123,9 @@ export class BoardsComponent implements OnInit {
       menuColorDark: '',
       menuColorLight: '',
       listColor: '',
-      backgroundId: 0,
-      archivedAt: new Date(0)
+      backgroundId: "",
+      archivedAt: new Date(0),
+      openedAt: new Date(),
     };
     this.archived = "";
     this.boardService.createBoard(newBoard).subscribe(() => {

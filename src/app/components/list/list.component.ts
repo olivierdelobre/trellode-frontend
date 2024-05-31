@@ -3,7 +3,6 @@ import { BoardService } from '../../services/board.service';
 import { List, Card } from '../../models/models';
 import { MiscService } from 'src/app/services/misc.service';
 import { BroadcastService } from 'src/app/services/broadcast.service';
-import { SortEvent } from 'src/app/draggable/sortable-list.directive';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
@@ -13,8 +12,8 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 })
 export class ListComponent implements OnInit {
   @Input() list: List = {
-    id: 0,
-    boardId: 0,
+    id: "",
+    boardId: "",
     title: '',
     position: 0,
     cards: [],
@@ -40,10 +39,20 @@ export class ListComponent implements OnInit {
   }
 
   loadList(): void {
-    this.boardService.getList(this.list.id).subscribe(
-      (data: any) => {
+    this.boardService.getList(this.list.id).subscribe({
+      next: (data: any) => {
         this.list = data;
-      });
+        this.cards = this.list.cards;
+      },
+      error: (error) => {
+        if (error.error.error) {
+          this.miscService.openSnackBar('failure', error.error.error);
+        }
+        else {
+          this.miscService.openSnackBar('failure', { what: 'unexpected' });
+        }
+      }
+    });
   }
 
   switchCreateCardInput() {
@@ -57,7 +66,7 @@ export class ListComponent implements OnInit {
 
   addCard(): void {
     let newCard: Card = {
-      id: 0,
+      id: "",
       listId: this.list.id,
       title: this.newCardTitleContent,
       description: '',
@@ -65,7 +74,8 @@ export class ListComponent implements OnInit {
       comments: [],
       createdAt: new Date(),
       updatedAt: new Date(),
-      archivedAt: new Date(0)
+      archivedAt: new Date(0),
+      checklists: []
     };
     this.boardService.createCard(this.list.id, newCard).subscribe({
       next: () => {

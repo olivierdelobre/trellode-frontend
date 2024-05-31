@@ -1,0 +1,29 @@
+<div class="checklist-box">
+    <div class="checkbox-header">
+        <div class="flex-row">
+            <mat-icon class="mat-icon" svgIcon="checklist"></mat-icon>&nbsp;&nbsp;
+            <h1>{{ checklist.title }}</h1>
+        </div>
+        <button mat-button class="primary" (click)="deleteChecklist()">Supprimer</button>
+    </div>
+    <div class="checkbox-progress">
+        <!--mat-progress-bar mode="determinate" [value]="checklist.progress"></mat-progress-bar-->
+    </div>
+    @for (item of checklist.items; track item.id) {
+    <div>
+        <mat-checkbox [(ngModel)]="item.checked" (change)="updateChecklistItem(item)"></mat-checkbox>{{ item.title }}
+    </div>
+    }
+    <div class="flex-row" *ngIf="!showAddItemForm">
+        <button mat-button class="primary" (click)="switchChecklistItemForm()">Ajouter un élément</button>
+    </div>
+    <div *ngIf="showAddItemForm">
+        <div>
+            <input #checklistItemTitleInput class="checklistitem-title-input" mat-input [(ngModel)]="checklistItemTitleContent" (keyup.enter)="addChecklistItem()" placeholder="Ajouter un élément..."/>
+        </div>
+        <div class="flex-row">
+            <button mat-button class="primary" (click)="addChecklistItem()">Enregistrer</button>
+            <button mat-button class="primary" (click)="switchChecklistItemForm()">Annuler</button>
+        </div>
+    </div>
+</div>

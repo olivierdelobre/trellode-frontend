@@ -12,15 +12,16 @@ import { MiscService } from 'src/app/services/misc.service';
 })
 export class CardComponent implements OnInit {
   @Input() card: Card = {
-    id: 0,
-    listId: 0,
+    id: "",
+    listId: "",
     title: '',
     description: '',
     position: 0,
     comments: [],
     createdAt: new Date(),
     updatedAt: new Date(),
-    archivedAt: new Date(0)
+    archivedAt: new Date(0),
+    checklists: []
   };
 
   constructor(private boardService: BoardService,
@@ -73,9 +74,9 @@ export class CardComponent implements OnInit {
 
   addComment(): void {
     const newComment: Comment = {
-      id: 0,
+      id: "",
       cardId: this.card.id,
-      userId: 0,
+      userId: "",
       content: 'New Comment',
       createdAt: new Date(),
       updatedAt: new Date()
@@ -90,7 +91,6 @@ export class CardComponent implements OnInit {
   }
 
   openCardForm() {
-    return; //FIXME
     // Pass clone to avoid data being modified in service detail component
     const config: MatDialogConfig = {
       panelClass: 'lg-popup',

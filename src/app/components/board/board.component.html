@@ -12,9 +12,11 @@
       <mat-icon class="mat-icon-big" style="fill: white;" svgIcon="dots" (click)="switchRightMenu()"></mat-icon>
     </div>
   </div>
-  <div class="lists-list">
+  <div class="lists-list" cdkDropList (cdkDropListDropped)="drop($event)">
     @for (list of board.lists; track list.id) {
+    <div cdkDrag>
       <app-list [list]="list" [color]="board.listColor"></app-list>
+    </div>
     }
     <div *ngIf="!showCreateListInput" class="flex-row add-list-bar" (click)="switchCreateListInput()">
       <mat-icon class="mat-icon-md" style="fill: black;" svgIcon="plus"></mat-icon>

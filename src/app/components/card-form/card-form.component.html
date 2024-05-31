@@ -24,6 +24,13 @@
           <button mat-button class="primary" (click)="updateCard()">Enregistrer</button>
         </div>
       </div>
+      @if (card.checklists.length > 0) {
+      @for (checklist of card.checklists; track checklist.id) {
+      <div>
+        <app-checklist [checklist]="checklist"></app-checklist>
+      </div>
+      }
+      }
       <h2>Commentaires</h2>
       <div class="comment-fake-input" *ngIf="!showCommentInput" (click)="switchCommentInput()">
         Ecrivez un commentaire...
@@ -47,15 +54,23 @@
       <div class="right-title">
         Actions
       </div>
+      <button mat-button class="primary" class="button-left" [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger">
+        <mat-icon class="mat-icon" svgIcon="checklist"></mat-icon> Checklist
+      </button>
       <button mat-button *ngIf="card.archivedAt == null" class="primary" class="button-left" (click)="archiveCard()">
         <mat-icon class="mat-icon" svgIcon="archive"></mat-icon> Archiver
       </button>
       <button mat-button *ngIf="card.archivedAt != null" class="primary" class="button-left" (click)="reactivateCard()">
         <mat-icon class="mat-icon" svgIcon="unarchive"></mat-icon> Restaurer
       </button>
-      <button mat-button class="primary" class="button-left">
-        <mat-icon class="mat-icon" svgIcon="checklist"></mat-icon> Checklist
-      </button>
     </div>
   </div>
 </div>
+<mat-menu #menu="matMenu">
+  <div class="mat-menu-content create-checklist-menu" (click) = "$event.stopPropagation()">
+    <input #checklistTitleInput class="checklist-title-input" mat-input [(ngModel)]="checklistTitleContent" (keyup.enter)="createChecklist()" placeholder="Titre de la checklist"/>
+    <div class="mat-menu-buttons">
+      <button mat-menu-item class="mat-menu-button" (click)="createChecklist()">Enregistrer</button>
+    </div>
+  </div>
+</mat-menu>

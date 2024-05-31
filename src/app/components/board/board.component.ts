@@ -6,7 +6,7 @@ import { BroadcastService } from 'src/app/services/broadcast.service';
 import { MiscService } from 'src/app/services/misc.service';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { CardFormComponent } from '../card-form/card-form.component';
-import { SortEvent } from '../../draggable/sortable-list.directive';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-board',
@@ -14,13 +14,13 @@ import { SortEvent } from '../../draggable/sortable-list.directive';
   styleUrls: ['./board.component.scss']
 })
 export class BoardComponent implements OnInit {
-  boardId: number = 0;
+  boardId: string = "";
   board: Board = {
-    id: 0,
-    userId: 0,
+    id: "",
+    userId: "",
     title: '',
     background: {
-      id: 0,
+      id: "",
       data: ''
     },
     lists: [],
@@ -29,9 +29,11 @@ export class BoardComponent implements OnInit {
     menuColorDark: '',
     menuColorLight: '',
     listColor: '',
-    backgroundId: 0,
-    archivedAt: new Date(0)
+    backgroundId: "",
+    archivedAt: new Date(0),
+    openedAt: new Date(),
   };
+  lists: List[] = [];
   backgrounds: Background[] = [];
   logs: Log[] = [];
   showCreateListInput: boolean = false;
@@ -88,7 +90,7 @@ export class BoardComponent implements OnInit {
     });
   }
 
-  loadLogs(boardId: number): void {
+  loadLogs(boardId: string): void {
     this.boardService.getLogs(boardId).subscribe({
       next: (data: any) => {
         this.logs = data;
@@ -106,8 +108,8 @@ export class BoardComponent implements OnInit {
 
   addList(): void {
     let newList: List = {
-      id: 0,
-      boardId: +this.boardId,
+      id: "",
+      boardId: this.boardId,
       title: this.newListTitleContent,
       position: 0,
       cards: [],
@@ -229,7 +231,7 @@ export class BoardComponent implements OnInit {
     });
   }
 
-  deleteBoard(boardId: number): void {
+  deleteBoard(boardId: string): void {
     this.boardService.deleteBoard(boardId).subscribe({
       next: () => {
         let msg = {
@@ -276,7 +278,7 @@ export class BoardComponent implements OnInit {
     });
   }
 
-  setBoardBackground(id: number): void {
+  setBoardBackground(id: string): void {
     this.board.backgroundId = id;
     this.updateBoard(this.board);
   }
@@ -301,7 +303,7 @@ export class BoardComponent implements OnInit {
     });
   }
 
-  deleteBackground(id: number): void {
+  deleteBackground(id: string): void {
     this.boardService.deleteBackground(id).subscribe({
       next: () => {
         let msg = {
@@ -370,6 +372,24 @@ export class BoardComponent implements OnInit {
   
       this.dialogRef = this.dialog.open(CardFormComponent, config);
     }
+  }
+
+  drop(event: CdkDragDrop<List[]>) {
+    moveItemInArray(this.lists, event.previousIndex, event.currentIndex);
+    console.log("after="+JSON.stringify(this.lists));
+    //this.boardService.changeCardOrder(this.list.id, this.cards.map(card => card.id).join(',')).subscribe({
+    //  next: () => {
+    //    this.loadList();
+    //  },
+    //  error: (error) => {
+    //    if (error.error.error) {
+    //      this.miscService.openSnackBar('failure', error.error.error);
+    //    }
+    //    else {
+    //      this.miscService.openSnackBar('failure', { what: 'unexpected' });
+    //    }
+    //  }
+    //});
   }
 }
 

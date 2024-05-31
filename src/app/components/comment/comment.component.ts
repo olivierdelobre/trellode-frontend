@@ -9,9 +9,9 @@ import { Comment } from '../../models/models';
 })
 export class CommentComponent implements OnInit {
   @Input() comment: Comment = {
-    id: 0,
-    cardId: 0,
-    userId: 0,
+    id: "",
+    cardId: "",
+    userId: "",
     content: '',
     createdAt: new Date(),
     updatedAt: new Date()
@@ -36,7 +36,7 @@ export class CommentComponent implements OnInit {
     });
   }
 
-  deleteComment(commentId: number): void {
+  deleteComment(commentId: string): void {
     this.boardService.deleteComment(commentId).subscribe(() => {
       this.loadComment();
     });

@@ -6,8 +6,9 @@ import { BoardService } from 'src/app/services/board.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MiscService } from 'src/app/services/misc.service';
-import { Comment } from '../../models/models';
+import { Checklist, Comment } from '../../models/models';
 import { BroadcastService } from 'src/app/services/broadcast.service';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
   selector: 'card-form',
@@ -17,7 +18,7 @@ import { BroadcastService } from 'src/app/services/broadcast.service';
 export class CardFormComponent implements OnInit {
 
   card: any;
-  cardId: number = 0;
+  cardId: string = "";
   namePattern: string = '^[A-Za-z\\._\\-\\d]{3,20}$';
   camiprodRfidPattern: string = '^[A-Z\\d]{14,16}$';
   loggedUserInfo: any = {};
@@ -26,6 +27,7 @@ export class CardFormComponent implements OnInit {
   showDescriptionInput: boolean = false;
   titleContent: string = "";
   commentContent: string = "";
+  checklistTitleContent: string = "";
   descriptionContent: string = "";
   saveSubscription: Subscription = new Subscription;
   saveCommentSubscription: Subscription = new Subscription;
@@ -35,6 +37,8 @@ export class CardFormComponent implements OnInit {
   @Output() onFailure: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild('titleInput') titleInput: any;
+  @ViewChild('checklistTitleInput') checklistTitleInput: any;
+  @ViewChild('menuTrigger') menuTrigger: MatMenuTrigger | undefined;
 
   form: UntypedFormGroup | undefined;
 
@@ -49,7 +53,7 @@ export class CardFormComponent implements OnInit {
     private miscService: MiscService,
     private broadcastService: BroadcastService) {
       this.card = data.card;
-      if (this.card == null && data.cardId != 0) {
+      if (this.card == null && data.cardId != "") {
         this.boardService.getCard(data.cardId).subscribe({
           next: (data: any) => {
             this.card = data;
@@ -69,6 +73,14 @@ export class CardFormComponent implements OnInit {
   ngOnInit(): void {
     this.titleContent = this.card.title;
     this.descriptionContent = this.card.description;
+
+    this.broadcastService.refreshCard.subscribe({
+      next: (data: any) => {
+        if (data) {
+          this.loadCard();
+        }
+      }
+    });
   }
   
   createForm(): void {
@@ -79,10 +91,19 @@ export class CardFormComponent implements OnInit {
   }
 
   loadCard(): void {
-    this.boardService.getCard(this.card.id).subscribe(
-      (data: any) => {
+    this.boardService.getCard(this.card.id).subscribe({
+      next: (data: any) => {
         this.card = data;
-      });
+      },
+      error: (error) => {
+        if (error.error.error) {
+          this.miscService.openSnackBar('failure', error.error.error);
+        }
+        else {
+          this.miscService.openSnackBar('failure', { what: 'unexpected' });
+        }
+      }
+    });
   }
 
   updateCard() {
@@ -113,9 +134,9 @@ export class CardFormComponent implements OnInit {
 
   addComment() {
     let newComment: Comment = {
-      id: 0,
+      id: "",
       cardId: this.card.id,
-      userId: 0,
+      userId: "",
       content: this.commentContent,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -214,5 +235,32 @@ export class CardFormComponent implements OnInit {
     if (this.archiveCardSubscription) {
       this.archiveCardSubscription.unsubscribe();
     }
+  }
+
+  createChecklist() {
+    let newChecklist: Checklist = {
+      id: "",
+      cardId: this.card.id,
+      title: this.checklistTitleContent,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      items: [],
+      archivedAt: new Date(0)
+    }
+    this.boardService.createChecklist(newChecklist).subscribe({
+      next: (data: any) => {
+        this.checklistTitleContent = "";
+        this.loadCard();
+        this.menuTrigger?.closeMenu();
+      },
+      error: (error) => {
+        if (error.error.error) {
+          this.miscService.openSnackBar('failure', error.error.error);
+        }
+        else {
+          this.miscService.openSnackBar('failure', { what: 'unexpected' });
+        }
+      }
+    })
   }
 }

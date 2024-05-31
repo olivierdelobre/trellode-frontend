@@ -17,17 +17,60 @@
       </div>
     </div>
   </div>
-  <div class="boards-list">
   @if (count == 0) {
-    Aucun tableau
+    <div class="boards-box no-board" style="text-align: center;">
+      <div class="sorry">
+        ¯\_(ツ)_/¯
+      </div>
+      Aucun tableau
+    </div>
   }
   @if (count == -1) {
     <mat-spinner [diameter]="30"></mat-spinner>
   }
-  @for (board of boards; track board.id) {
-    <div class="board" [routerLink]="['/boards/', board.id]" [ngStyle]="{'background-image': board.background && board.background.data ? 'url('+board.background.data+')' : 'none'}">
-      <div class="title">{{ board.title }}</div>
+  @if (count > 0) {
+    @if (archived == "1") {
+      <div class="boards-box">
+        <div class="flex-row boards-box-title">
+          <mat-icon class="mat-icon-big" svgIcon="archive"></mat-icon>
+          <h1>&nbsp;Vos tableaux archivés</h1>
+        </div>
+        <div class="boards-list">
+          @for (board of boards; track board.id) {
+          <div class="board" [routerLink]="['/boards/', board.id]" [ngStyle]="{'background-image': board.background && board.background.data ? 'url('+board.background.data+')' : 'none'}">
+            <div class="title">{{ board.title }}</div>
+          </div>
+          }
+        </div>
+      </div>
+    }
+    @else {
+  <div class="boards-box">
+    <div class="flex-row boards-box-title">
+      <mat-icon class="mat-icon-big" svgIcon="date"></mat-icon>
+      <h1>&nbsp;Récemment consultés</h1>
     </div>
-  }
+    <div class="boards-list">
+      @for (board of recentBoards; track board.id) {
+      <div class="board" [routerLink]="['/boards/', board.id]" [ngStyle]="{'background-image': board.background && board.background.data ? 'url('+board.background.data+')' : 'none'}">
+        <div class="title">{{ board.title }}</div>
+      </div>
+      }
+    </div>
   </div>
+  <div class="boards-box">
+    <div class="flex-row boards-box-title">
+      <mat-icon class="mat-icon-big" svgIcon="logo"></mat-icon>
+      <h1>&nbsp;Tous vos tableaux</h1>
+    </div>
+    <div class="boards-list">
+      @for (board of boards; track board.id) {
+        <div class="board" [routerLink]="['/boards/', board.id]" [ngStyle]="{'background-image': board.background && board.background.data ? 'url('+board.background.data+')' : 'none'}">
+          <div class="title">{{ board.title }}</div>
+        </div>
+      }
+    </div>
+  </div>
+    }
+  }
 </div>

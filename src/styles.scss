@@ -55,6 +55,19 @@ p {
     margin: 0;
 }
 
+.mat-menu-buttons {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.mat-menu-button {
+    padding: 10px;
+    margin: 0;
+    width:fit-content;
+}
+
 .mat-mdc-menu-content {
     padding: 0 !important;
 }
@@ -160,4 +173,8 @@ a.button {
 
 .movable:not(.dragging) {
   transition: transform 300ms ease-in-out;
+}
+
+.mat-menu-content {
+  padding: 10px 15px;
 }

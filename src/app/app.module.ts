@@ -19,6 +19,7 @@ import { RouterModule } from '@angular/router';
 import { AuthInterceptor } from './http-interceptors/auth-interceptor';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CardFormComponent } from './components/card-form/card-form.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { NotificationComponent } from './components/notification/notification.component';
@@ -30,8 +31,8 @@ import { QuillModule } from 'ngx-quill'
 import { BroadcastService } from './services/broadcast.service';
 import { BoardFormComponent } from './components/board-form/board-form.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { DraggableModule } from './draggable/draggable.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ChecklistComponent } from './components/checklist/checklist.component';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
         CommentComponent,
         CardFormComponent,
         BoardFormComponent,
+        ChecklistComponent,
         NotificationComponent
     ],
     bootstrap: [AppComponent],
@@ -66,7 +68,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
         MatMenuModule,
         MatDialogModule,
         MatProgressSpinnerModule,
-        DraggableModule
+        MatCheckboxModule
     ],
     exports: [
         MatButtonModule,

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Board, List, Card, Comment, Background, Log } from '../models/models';
+import { Board, List, Card, Comment, Background, Log, Checklist, ChecklistItem } from '../models/models';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -13,7 +13,7 @@ export class BoardService {
   constructor(private http: HttpClient) {}
 
   // Board operations
-  getBoard(id: number): Observable<Board> {
+  getBoard(id: string): Observable<Board> {
     return this.http.get<Board>(`${this.apiUrl}/v1/boards/${id}`);
   }
 
@@ -36,7 +36,7 @@ export class BoardService {
     return this.http.post<Background>(`${this.apiUrl}/v1/backgrounds`, {data: uploadData}, {headers: headers});
   }
 
-  deleteBackground(backgroundId: number): Observable<void> {
+  deleteBackground(backgroundId: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/v1/backgrounds/${backgroundId}`);
   }
 
@@ -48,16 +48,16 @@ export class BoardService {
     return this.http.put<Board>(`${this.apiUrl}/v1/boards/${board.id}`, board);
   }
 
-  deleteBoard(boardId: number): Observable<void> {
+  deleteBoard(boardId: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/v1/boards/${boardId}`);
   }
 
   // List operations
-  getList(id: number): Observable<List> {
+  getList(id: string): Observable<List> {
     return this.http.get<List>(`${this.apiUrl}/v1/lists/${id}`);
   }
 
-  createList(boardId: number, list: List): Observable<List> {
+  createList(boardId: string, list: List): Observable<List> {
     return this.http.post<List>(`${this.apiUrl}/v1/lists`, list);
   }
 
@@ -65,16 +65,16 @@ export class BoardService {
     return this.http.put<List>(`${this.apiUrl}/v1/lists/${list.id}`, list);
   }
 
-  deleteList(listId: number): Observable<void> {
+  deleteList(listId: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/v1/lists/${listId}`);
   }
 
   // Card operations
-  getCard(id: number): Observable<Card[]> {
+  getCard(id: string): Observable<Card[]> {
     return this.http.get<Card[]>(`${this.apiUrl}/v1/cards/${id}`);
   }
 
-  createCard(listId: number, card: Card): Observable<Card> {
+  createCard(listId: string, card: Card): Observable<Card> {
     return this.http.post<Card>(`${this.apiUrl}/v1/cards`, card);
   }
 
@@ -82,20 +82,20 @@ export class BoardService {
     return this.http.put<Card>(`${this.apiUrl}/v1/cards/${card.id}`, card);
   }
 
-  deleteCard(cardId: number): Observable<void> {
+  deleteCard(cardId: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/v1/cards/${cardId}`);
   }
 
   // Comment operations
-  getComment(id: number): Observable<Comment[]> {
+  getComment(id: string): Observable<Comment[]> {
     return this.http.get<Comment[]>(`${this.apiUrl}/v1/comments/${id}`);
   }
 
-  getComments(cardId: number): Observable<Comment[]> {
+  getComments(cardId: string): Observable<Comment[]> {
     return this.http.get<Comment[]>(`${this.apiUrl}/v1/cards/${cardId}/comments`);
   }
 
-  createComment(cardId: number, comment: Comment): Observable<Comment> {
+  createComment(cardId: string, comment: Comment): Observable<Comment> {
     return this.http.post<Comment>(`${this.apiUrl}/v1/comments`, comment);
   }
 
@@ -103,16 +103,53 @@ export class BoardService {
     return this.http.put<Comment>(`${this.apiUrl}/v1/comments/${comment.id}`, comment);
   }
 
-  deleteComment(commentId: number): Observable<void> {
+  deleteComment(commentId: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/v1/comments/${commentId}`);
   }
 
-  getLogs(boardId: number): Observable<Log[]> {
+  getLogs(boardId: string): Observable<Log[]> {
     return this.http.get<Log[]>(`${this.apiUrl}/v1/logs?boardid=${boardId}`);
   }
 
-  changeCardOrder(listId: number, idsOrdered: string) {
-    return this.http.put(`${this.apiUrl}/v1/lists/${listId}/order/${idsOrdered}`, {});
+  changeCardOrder(listId: string, idsOrdered: string) {
+    return this.http.put(`${this.apiUrl}/v1/lists/${listId}/order`, { idsOrdered: idsOrdered });
+  }
+
+  changListOrder(boardId: string, idsOrdered: string) {
+    return this.http.put(`${this.apiUrl}/v1/boards/${boardId}/order/${idsOrdered}`, {});
+  }
+
+  // Checklist operations
+  getChecklist(id: string): Observable<Checklist> {
+    return this.http.get<Checklist>(`${this.apiUrl}/v1/checklists/${id}`);
+  }
+
+  createChecklist(checklist: Checklist): Observable<Checklist> {
+    return this.http.post<Checklist>(`${this.apiUrl}/v1/checklists`, checklist);
+  }
+
+  updateChecklist(checklist: Checklist): Observable<Checklist> {
+    return this.http.put<Checklist>(`${this.apiUrl}/v1/checklists/${checklist.id}`, checklist);
+  }
+
+  deleteChecklist(checklistId: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/v1/checklists/${checklistId}`);
+  }
+
+  getChecklistItem(id: string): Observable<ChecklistItem> {
+    return this.http.get<ChecklistItem>(`${this.apiUrl}/v1/checklistitems/${id}`);
+  }
+
+  createChecklistItem(checklistItem: ChecklistItem): Observable<ChecklistItem> {
+    return this.http.post<ChecklistItem>(`${this.apiUrl}/v1/checklistitems`, checklistItem);
+  }
+
+  updateChecklistItem(checklistItem: ChecklistItem): Observable<ChecklistItem> {
+    return this.http.put<ChecklistItem>(`${this.apiUrl}/v1/checklistitems/${checklistItem.id}`, checklistItem);
+  }
+
+  deleteChecklistItem(checklistItemId: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/v1/checklistitems/${checklistItemId}`);
   }
 }
 
