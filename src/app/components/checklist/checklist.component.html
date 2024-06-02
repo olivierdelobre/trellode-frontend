@@ -11,7 +11,7 @@
     </div>
     @for (item of checklist.items; track item.id) {
     <div>
-        <mat-checkbox [(ngModel)]="item.checked" (change)="updateChecklistItem(item)"></mat-checkbox>{{ item.title }}
+        <app-checklistitem [item]="item"></app-checklistitem>
     </div>
     }
     <div class="flex-row" *ngIf="!showAddItemForm">

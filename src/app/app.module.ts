@@ -33,6 +33,7 @@ import { BoardFormComponent } from './components/board-form/board-form.component
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ChecklistComponent } from './components/checklist/checklist.component';
+import { ChecklistItemComponent } from './components/checklistitem/checklist.component';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import { ChecklistComponent } from './components/checklist/checklist.component';
         CardFormComponent,
         BoardFormComponent,
         ChecklistComponent,
+        ChecklistItemComponent,
         NotificationComponent
     ],
     bootstrap: [AppComponent],

@@ -1,0 +1,19 @@
+.checklistitem-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+}
+
+input.checklistitem-title-input {
+    background-color: white;
+    border: 2px solid navy !important;
+    border-radius: 5px;
+    padding: 8px;
+    box-shadow: none;
+    font-size: 16px;
+    font-weight: 500;
+    width: 100%;
+    margin-top: 10px;
+}

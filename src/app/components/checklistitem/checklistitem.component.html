@@ -1,0 +1,6 @@
+<div class="checklistitem-box">
+    <div class="flex-row">
+        <mat-checkbox [(ngModel)]="item.checked" (change)="updateChecklistItem(item)"></mat-checkbox>{{ item.title }}
+    </div>
+    <mat-icon class="mat-icon pointer" svgIcon="delete" (click)="deleteChecklistItem()"></mat-icon>
+</div>
