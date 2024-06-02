@@ -155,5 +155,9 @@ export class BoardService {
   changeChecklistItemsOrder(checklistId: string, idsOrdered: string) {
     return this.http.put(`${this.apiUrl}/v1/checklists/${checklistId}/order`, { idsOrdered: idsOrdered });
   }
+
+  changeListsOrder(boardId: string, idsOrdered: string) {
+    return this.http.put(`${this.apiUrl}/v1/boards/${boardId}/order`, { idsOrdered: idsOrdered });
+  }
 }
 
