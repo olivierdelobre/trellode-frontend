@@ -6,8 +6,8 @@ import { BroadcastService } from 'src/app/services/broadcast.service';
 
 @Component({
   selector: 'app-checklistitem',
-  templateUrl: './checklistItem.component.html',
-  styleUrls: ['./checklistItem.component.scss']
+  templateUrl: './checklistitem.component.html',
+  styleUrls: ['./checklistitem.component.scss']
 })
 export class ChecklistItemComponent implements OnInit {
   @Input() item: ChecklistItem = {
@@ -18,16 +18,26 @@ export class ChecklistItemComponent implements OnInit {
     updatedAt: new Date(),
     checked: false
   };
-  showAddItemForm: boolean = false;
-  checklistItemItemTitleContent: string = '';
-  @ViewChild('checklistItemItemTitleInput') checklistItemItemTitleInput: any;
+  showTitleInput: boolean = false;
+  titleContent: string = '';
+  
+  @ViewChild('titleInput') titleInput: any;
 
   constructor(private boardService: BoardService,
     private miscService: MiscService,
     private broadcastService: BroadcastService) {}
 
   ngOnInit(): void {
-    
+    this.titleContent = this.item.title;
+  }
+
+  switchTitleInput() {
+    this.showTitleInput = !this.showTitleInput;
+    if (this.showTitleInput) {
+      setTimeout(() => {
+        this.titleInput.nativeElement.focus();
+      }, 0);
+    }
   }
 
   loadChecklistItem(): void {
@@ -46,10 +56,11 @@ export class ChecklistItemComponent implements OnInit {
     });
   }
 
-  updateChecklistItem(checklistItem: ChecklistItem): void {
-    this.boardService.updateChecklistItem(checklistItem).subscribe({
+  updateChecklistItem(): void {
+    this.item.title = this.titleContent;
+    this.boardService.updateChecklistItem(this.item).subscribe({
       next: (data: any) => {
-        this.item = data;
+        this.showTitleInput = false;
       },
       error: (error) => {
         if (error.error.error) {

@@ -1,6 +1,10 @@
 <div class="checklistitem-box">
     <div class="flex-row">
-        <mat-checkbox [(ngModel)]="item.checked" (change)="updateChecklistItem(item)"></mat-checkbox>{{ item.title }}
+        <mat-checkbox [(ngModel)]="item.checked" (change)="updateChecklistItem()"></mat-checkbox>
+        <span *ngIf="!showTitleInput" (click)="switchTitleInput()">
+            {{ item.title }}
+        </span>
+        <input #titleInput class="item-title-input" mat-input *ngIf="showTitleInput" [(ngModel)]="titleContent" (keyup.enter)="updateChecklistItem()" (keyup.escape)="switchTitleInput()" [value]="item.title"/>
     </div>
     <mat-icon class="mat-icon pointer" svgIcon="delete" (click)="deleteChecklistItem()"></mat-icon>
 </div>

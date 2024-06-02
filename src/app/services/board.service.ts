@@ -151,5 +151,9 @@ export class BoardService {
   deleteChecklistItem(checklistItemId: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/v1/checklistitems/${checklistItemId}`);
   }
+
+  changeChecklistItemsOrder(checklistId: string, idsOrdered: string) {
+    return this.http.put(`${this.apiUrl}/v1/checklists/${checklistId}/order`, { idsOrdered: idsOrdered });
+  }
 }
 

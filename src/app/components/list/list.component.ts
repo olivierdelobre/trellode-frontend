@@ -22,7 +22,6 @@ export class ListComponent implements OnInit {
     archivedAt: new Date(0)
   };
   @Input() color: string = '';
-  items = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
   cards: Card[] = [];
 
   showCreateCardInput: boolean = false;
@@ -124,7 +123,6 @@ export class ListComponent implements OnInit {
 
   drop(event: CdkDragDrop<Card[]>) {
     moveItemInArray(this.cards, event.previousIndex, event.currentIndex);
-    console.log("after="+JSON.stringify(this.cards));
     this.boardService.changeCardOrder(this.list.id, this.cards.map(card => card.id).join(',')).subscribe({
       next: () => {
         this.loadList();

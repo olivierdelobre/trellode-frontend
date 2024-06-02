@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChecklistComponent } from './checklist.component';
+import { ChecklistComponent } from './checklistitem.component';
 
 describe('ChecklistComponent', () => {
   let component: ChecklistComponent;

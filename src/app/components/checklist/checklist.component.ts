@@ -3,6 +3,7 @@ import { BoardService } from '../../services/board.service';
 import { Checklist, ChecklistItem } from '../../models/models';
 import { MiscService } from 'src/app/services/misc.service';
 import { BroadcastService } from 'src/app/services/broadcast.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-checklist',
@@ -19,6 +20,7 @@ export class ChecklistComponent implements OnInit {
     items: [],
     archivedAt: new Date(0)
   };
+  items: ChecklistItem[] = [];
   showAddItemForm: boolean = false;
   checklistItemTitleContent: string = '';
   @ViewChild('checklistItemTitleInput') checklistItemTitleInput: any;
@@ -28,7 +30,7 @@ export class ChecklistComponent implements OnInit {
     private broadcastService: BroadcastService) {}
 
   ngOnInit(): void {
-    
+    this.items = this.checklist.items;
   }
 
   loadChecklist(): void {
@@ -129,6 +131,24 @@ export class ChecklistComponent implements OnInit {
         this.checklistItemTitleInput.nativeElement.focus();
       }, 0);
     }
+  }
+
+  drop(event: CdkDragDrop<ChecklistItem[]>) {
+    moveItemInArray(this.items, event.previousIndex, event.currentIndex);
+    console.log("after="+JSON.stringify(this.items));
+    this.boardService.changeChecklistItemsOrder(this.checklist.id, this.items.map(item => item.id).join(',')).subscribe({
+      next: () => {
+        this.loadChecklist();
+      },
+      error: (error) => {
+        if (error.error.error) {
+          this.miscService.openSnackBar('failure', error.error.error);
+        }
+        else {
+          this.miscService.openSnackBar('failure', { what: 'unexpected' });
+        }
+      }
+    });
   }
 }
 
