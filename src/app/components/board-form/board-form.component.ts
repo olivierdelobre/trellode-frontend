@@ -78,8 +78,8 @@ export class BoardFormComponent implements OnInit {
           this.dialogRef.close();
         },
         error: (error) => {
-          if (error.error.error) {
-            this.miscService.openSnackBar('failure', error.error.error);
+          if (error.error) {
+            this.miscService.openSnackBar('failure', error.error.detail);
           }
           else {
             this.miscService.openSnackBar('failure', { what: 'unexpected' });
@@ -101,8 +101,8 @@ export class BoardFormComponent implements OnInit {
           this.dialogRef.close();
         },
         error: (error) => {
-          if (error.error.error) {
-            this.miscService.openSnackBar('failure', error.error.error);
+          if (error.error) {
+            this.miscService.openSnackBar('failure', error.error.detail);
           }
           else {
             this.miscService.openSnackBar('failure', { what: 'unexpected' });
@@ -138,8 +138,8 @@ export class BoardFormComponent implements OnInit {
         this.dialogRef.close();
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
           this.miscService.openSnackBar('failure', { what: 'unexpected' });

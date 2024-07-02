@@ -1,20 +1,23 @@
 <div class="fullpage-container">
   <div class="board-bar">
-    <div class="flex-row">
-      <div class="flex-row home pointer" [routerLink]="['/boards']">
-        <mat-icon class="mat-icon-big" style="fill: #303030 ;" svgIcon="logo"></mat-icon>&nbsp; Trell<i>ode</i>
+    <div class="flex-row" style="width: 100%; justify-content: space-between;">
+      <div class="flex-row">
+        <div class="flex-row home pointer" [routerLink]="['/boards']">
+          <mat-icon class="mat-icon-big" style="fill: #303030 ;" svgIcon="logo"></mat-icon>&nbsp; Trell<i>ode</i>
+        </div>
+        <div class="flex-row board-buttons">
+          <div class="board-title pointer" [routerLink]="['/boards']">
+            Tous vos tableaux
+          </div>
+          <div class="board-title pointer" [routerLink]="['/boards']" [queryParams]="{archived: 1}">
+            Vos tableaux archivés
+          </div>
+          <div class="create-board-button">
+            <button mat-button (click)="openBoardForm()">Créer un tableau</button>
+          </div>
+        </div>
       </div>
-      <div class="flex-row board-buttons">
-        <div class="board-title pointer" [routerLink]="['/boards']">
-          Tous vos tableaux
-        </div>
-        <div class="board-title pointer" [routerLink]="['/boards']" [queryParams]="{archived: 1}">
-          Vos tableaux archivés
-        </div>
-        <div class="create-board-button">
-          <button mat-button (click)="openBoardForm()">Créer un tableau</button>
-        </div>
-      </div>
+      <app-navigation></app-navigation>
     </div>
   </div>
   @if (count == 0) {

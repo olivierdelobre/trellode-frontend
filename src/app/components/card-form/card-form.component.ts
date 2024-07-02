@@ -59,8 +59,8 @@ export class CardFormComponent implements OnInit {
             this.card = data;
           },
           error: (error) => {
-            if (error.error.error) {
-              this.miscService.openSnackBar('failure', error.error.error);
+            if (error.error) {
+              this.miscService.openSnackBar('failure', error.error.detail);
             }
             else {
               this.miscService.openSnackBar('failure', { what: 'unexpected' });
@@ -96,8 +96,8 @@ export class CardFormComponent implements OnInit {
         this.card = data;
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
           this.miscService.openSnackBar('failure', { what: 'unexpected' });
@@ -122,8 +122,8 @@ export class CardFormComponent implements OnInit {
         this.onSuccess.emit();
       },
       (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
           this.miscService.openSnackBar('failure', { what: 'unexpected' });
@@ -148,8 +148,8 @@ export class CardFormComponent implements OnInit {
         this.loadCard();
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
           this.miscService.openSnackBar('failure', { what: 'unexpected' });
@@ -192,8 +192,8 @@ export class CardFormComponent implements OnInit {
         this.dialogRef.close();
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
           this.miscService.openSnackBar('failure', { what: 'unexpected' });
@@ -215,8 +215,8 @@ export class CardFormComponent implements OnInit {
         this.dialogRef.close();
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
           this.miscService.openSnackBar('failure', { what: 'unexpected' });
@@ -254,8 +254,8 @@ export class CardFormComponent implements OnInit {
         this.menuTrigger?.closeMenu();
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
           this.miscService.openSnackBar('failure', { what: 'unexpected' });

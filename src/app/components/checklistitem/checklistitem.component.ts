@@ -46,11 +46,11 @@ export class ChecklistItemComponent implements OnInit {
         this.item = data;
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
-          this.miscService.openSnackBar('failure', error.error.error);
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
       }
     });
@@ -63,11 +63,11 @@ export class ChecklistItemComponent implements OnInit {
         this.showTitleInput = false;
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
-          this.miscService.openSnackBar('failure', error.error.error);
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
       }
     });
@@ -79,11 +79,11 @@ export class ChecklistItemComponent implements OnInit {
         this.broadcastService.updateRefreshCard(true);
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
-          this.miscService.openSnackBar('failure', error.error.error);
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
       }
     });

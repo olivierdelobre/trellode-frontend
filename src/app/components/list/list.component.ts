@@ -44,8 +44,8 @@ export class ListComponent implements OnInit {
         this.cards = this.list.cards;
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
           this.miscService.openSnackBar('failure', { what: 'unexpected' });
@@ -83,8 +83,8 @@ export class ListComponent implements OnInit {
         this.newCardTitleContent = '';
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
           this.miscService.openSnackBar('failure', { what: 'unexpected' });
@@ -105,8 +105,8 @@ export class ListComponent implements OnInit {
         this.broadcastService.updateRefreshBoard(true);
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
           this.miscService.openSnackBar('failure', { what: 'unexpected' });
@@ -128,8 +128,8 @@ export class ListComponent implements OnInit {
         this.loadList();
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
           this.miscService.openSnackBar('failure', { what: 'unexpected' });

@@ -159,5 +159,9 @@ export class BoardService {
   changeListsOrder(boardId: string, idsOrdered: string) {
     return this.http.put(`${this.apiUrl}/v1/boards/${boardId}/order`, { idsOrdered: idsOrdered });
   }
+
+  register(firstname: string, lastname: string, email: string, password: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/v1/users/register`, { firstname: firstname, lastname: lastname, email: email, password: password });
+  }
 }
 

@@ -21,6 +21,8 @@
     "@angular/platform-browser-dynamic": "^18.0.0",
     "@angular/router": "^18.0.0",
     "@ngx-translate/core": "^15.0.0",
+    "crypto": "^1.0.1",
+    "jwt-decode": "^4.0.0",
     "ngx-quill": "^26.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

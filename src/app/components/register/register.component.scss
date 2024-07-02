@@ -1,0 +1,26 @@
+@import '../../../styles.scss';
+
+.registration-container {
+    width: 300px;
+    margin: 100px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .registration-container div {
+    margin-bottom: 15px;
+  }
+  
+  .registration-container label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .registration-container input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+
+  

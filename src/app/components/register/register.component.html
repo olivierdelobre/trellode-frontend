@@ -1,0 +1,29 @@
+<div class="registration-container">
+    <form (ngSubmit)="onSubmit()" [formGroup]="registrationForm">
+      <div>
+        <label for="firstname">Firstname</label>
+        <input id="firstname" formControlName="firstname" type="text" />
+      </div>
+      <div>
+        <label for="lastname">Lastname</label>
+        <input id="lastname" formControlName="lastname" type="text" />
+      </div>
+      <div>
+        <label for="email">Email</label>
+        <input id="email" formControlName="email" type="email" />
+      </div>
+      <div>
+        <label for="password">Password</label>
+        <input id="password" formControlName="password" type="password" />
+      </div>
+      <div>
+        <label for="confirmPassword">Confirm Password</label>
+        <input id="confirmPassword" formControlName="confirmPassword" type="password" />
+      </div>
+      <button mat-button class="primary" type="submit" [disabled]="registrationForm.invalid">Register</button>
+      <br />
+      <br />
+      <button mat-button class="primary" [routerLink]="['/login']">Annuler</button>
+    </form>
+  </div>
+  

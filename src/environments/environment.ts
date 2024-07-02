@@ -7,7 +7,8 @@ export const environment = {
   settings: {
     token_name: 'trellode.token',
     lang: 'trellode.lang',
-    api: 'http://localhost:8080/trellode-api'
+    api: 'http://localhost:8080/trellode-api',
+    redirect_login: 'trellode.redirect_login',
   }
 };
 

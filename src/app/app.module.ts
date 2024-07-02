@@ -34,6 +34,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ChecklistComponent } from './components/checklist/checklist.component';
 import { ChecklistItemComponent } from './components/checklistitem/checklistitem.component';
+import { ResponseInterceptor } from './http-interceptors/response-interceptor';
+import { NavigationComponent } from './components/navigation/navigation.component';
+import { AuthService } from './services/auth.service';
+import { RegistrerComponent } from './components/register/register.component';
+import { LoginComponent } from './components/login/login.component';
 
 
 @NgModule({
@@ -48,7 +53,10 @@ import { ChecklistItemComponent } from './components/checklistitem/checklistitem
         BoardFormComponent,
         ChecklistComponent,
         ChecklistItemComponent,
-        NotificationComponent
+        NotificationComponent,
+        NavigationComponent,
+        RegistrerComponent,
+        LoginComponent,
     ],
     bootstrap: [AppComponent],
     imports: [
@@ -78,6 +86,7 @@ import { ChecklistItemComponent } from './components/checklistitem/checklistitem
         MatMenuModule
     ],
     providers: [
+        AuthService,
         MiscService,
         BroadcastService,
         provideHttpClient(withInterceptorsFromDi()),
@@ -93,6 +102,7 @@ import { ChecklistItemComponent } from './components/checklistitem/checklistitem
             useValue: {}
         },
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: ResponseInterceptor, multi: true },
     ]
 })
 export class AppModule { }

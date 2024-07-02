@@ -39,11 +39,11 @@ export class ChecklistComponent implements OnInit {
         this.checklist = data;
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
-          this.miscService.openSnackBar('failure', error.error.error);
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
       }
     });
@@ -55,11 +55,11 @@ export class ChecklistComponent implements OnInit {
         this.checklist = data;
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
-          this.miscService.openSnackBar('failure', error.error.error);
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
       }
     });
@@ -71,11 +71,11 @@ export class ChecklistComponent implements OnInit {
         this.broadcastService.updateRefreshCard(true);
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
-          this.miscService.openSnackBar('failure', error.error.error);
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
       }
     });
@@ -87,11 +87,11 @@ export class ChecklistComponent implements OnInit {
         this.broadcastService.updateRefreshCard(true);
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
-          this.miscService.openSnackBar('failure', error.error.error);
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
       }
     });
@@ -114,11 +114,11 @@ export class ChecklistComponent implements OnInit {
         this.broadcastService.updateRefreshCard(true);
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
-          this.miscService.openSnackBar('failure', error.error.error);
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
       }
     });
@@ -141,8 +141,8 @@ export class ChecklistComponent implements OnInit {
         this.loadChecklist();
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
           this.miscService.openSnackBar('failure', { what: 'unexpected' });

@@ -1,0 +1,15 @@
+<div class="login-container">
+  <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+    <div>
+      <label for="email">Email</label>
+      <input id="email" formControlName="email" type="email" />
+    </div>
+    <div>
+      <label for="password">Password</label>
+      <input id="password" formControlName="password" type="password" />
+    </div>
+    <button mat-button class="primary" type="submit" [disabled]="loginForm.invalid">Login</button>
+    <div class="or">ou</div>
+    <button mat-button class="primary" [routerLink]="['/register']">Créer un compte</button>
+  </form>
+</div>

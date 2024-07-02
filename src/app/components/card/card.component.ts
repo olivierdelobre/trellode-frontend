@@ -46,8 +46,8 @@ export class CardComponent implements OnInit {
         this.loadCard();
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
           this.miscService.openSnackBar('failure', { what: 'unexpected' });
@@ -62,8 +62,8 @@ export class CardComponent implements OnInit {
         this.loadCard();
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
           this.miscService.openSnackBar('failure', { what: 'unexpected' });

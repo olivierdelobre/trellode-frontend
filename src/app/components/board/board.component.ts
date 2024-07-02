@@ -81,8 +81,8 @@ export class BoardComponent implements OnInit {
         this.loadLogs(this.boardId);
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
           this.miscService.openSnackBar('failure', { what: 'unexpected' });
@@ -97,8 +97,8 @@ export class BoardComponent implements OnInit {
         this.logs = data;
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
           this.miscService.openSnackBar('failure', { what: 'unexpected' });
@@ -130,8 +130,8 @@ export class BoardComponent implements OnInit {
         this.newListTitleContent = '';
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
           this.miscService.openSnackBar('failure', { what: 'unexpected' });
@@ -150,8 +150,8 @@ export class BoardComponent implements OnInit {
         this.loadBoard();
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
           this.miscService.openSnackBar('failure', { what: 'unexpected' });
@@ -201,8 +201,8 @@ export class BoardComponent implements OnInit {
         this.broadcastService.updateRefreshBoard(true);
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
           this.miscService.openSnackBar('failure', { what: 'unexpected' });
@@ -222,8 +222,8 @@ export class BoardComponent implements OnInit {
         this.broadcastService.updateRefreshBoard(true);
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
           this.miscService.openSnackBar('failure', { what: 'unexpected' });
@@ -243,8 +243,8 @@ export class BoardComponent implements OnInit {
         this.broadcastService.updateRefreshBoard(true);
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
           this.miscService.openSnackBar('failure', { what: 'unexpected' });
@@ -269,8 +269,8 @@ export class BoardComponent implements OnInit {
         this.backgrounds = data;
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
           this.miscService.openSnackBar('failure', { what: 'unexpected' });
@@ -294,8 +294,8 @@ export class BoardComponent implements OnInit {
         this.broadcastService.updateRefreshBoard(true);
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
           this.miscService.openSnackBar('failure', { what: 'unexpected' });
@@ -351,8 +351,8 @@ export class BoardComponent implements OnInit {
           this.loadBackgrounds();
         },
         error: (error) => {
-          if (error.error.error) {
-            this.miscService.openSnackBar('failure', error.error.error);
+          if (error.error) {
+            this.miscService.openSnackBar('failure', error.error.detail);
           }
           else {
             this.miscService.openSnackBar('failure', { what: 'unexpected' });
@@ -382,8 +382,8 @@ export class BoardComponent implements OnInit {
         this.loadBoard();
       },
       error: (error) => {
-        if (error.error.error) {
-          this.miscService.openSnackBar('failure', error.error.error);
+        if (error.error) {
+          this.miscService.openSnackBar('failure', error.error.detail);
         }
         else {
           this.miscService.openSnackBar('failure', { what: 'unexpected' });
