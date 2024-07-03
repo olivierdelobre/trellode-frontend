@@ -79,6 +79,7 @@ export class BoardComponent implements OnInit {
         this.board = data;
         this.lists = this.board.lists;
         this.loadLogs(this.boardId);
+        //console.log("getBoard: "+JSON.stringify(this.board));
       },
       error: (error) => {
         if (error.error) {
@@ -376,20 +377,26 @@ export class BoardComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<List[]>) {
-    moveItemInArray(this.lists, event.previousIndex, event.currentIndex);
-    this.boardService.changeListsOrder(this.board.id, this.lists.map(list => list.id).join(',')).subscribe({
-      next: () => {
-        this.loadBoard();
-      },
-      error: (error) => {
-        if (error.error) {
-          this.miscService.openSnackBar('failure', error.error.detail);
+    if (event.previousContainer === event.container) {
+      console.log("move list to same list");
+      moveItemInArray(this.lists, event.previousIndex, event.currentIndex);
+      this.boardService.changeListsOrder(this.board.id, this.lists.map(list => list.id).join(',')).subscribe({
+        next: () => {
+          this.loadBoard();
+        },
+        error: (error) => {
+          if (error.error) {
+            this.miscService.openSnackBar('failure', error.error.detail);
+          }
+          else {
+            this.miscService.openSnackBar('failure', { what: 'unexpected' });
+          }
         }
-        else {
-          this.miscService.openSnackBar('failure', { what: 'unexpected' });
-        }
-      }
-    });
+      });
+    }
+    else {
+      console.log("move list to another list");
+    }
   }
 }
 

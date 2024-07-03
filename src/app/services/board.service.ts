@@ -115,6 +115,10 @@ export class BoardService {
     return this.http.put(`${this.apiUrl}/v1/lists/${listId}/order`, { idsOrdered: idsOrdered });
   }
 
+  moveCardToList(sourceListIndex: number, sourceCardIndex: number, targetListId: string, targetCardIndex: number) {
+    return this.http.put(`${this.apiUrl}/v1/lists/${targetListId}/move`, { sourcelistindex: sourceListIndex, sourcecardindex: sourceCardIndex, targetlistid: targetListId, targetcardindex: targetCardIndex });
+  }
+
   changListOrder(boardId: string, idsOrdered: string) {
     return this.http.put(`${this.apiUrl}/v1/boards/${boardId}/order/${idsOrdered}`, {});
   }

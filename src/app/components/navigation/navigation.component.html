@@ -1,9 +1,37 @@
 <div class="initials pointer" [matMenuTriggerFor]="menu">
   {{ userInfo?.firstname[0] }}{{ userInfo?.lastname[0] }}
 </div>
-<mat-menu #menu="matMenu">
-  <button mat-menu-item class="menu-button" (click)="logout()">
-    <mat-icon class="mat-icon" svgIcon="logout"></mat-icon>
-    <span>Logout</span>
-  </button>
+<mat-menu #menu="matMenu" class="navigation-menu">
+  <div class="section-box" (click) = "$event.stopPropagation()">
+    <h3>Compte</h3>
+    <div class="flex-row identitity">
+      <div class="initials" [matMenuTriggerFor]="menu">
+        {{ userInfo?.firstname[0] }}{{ userInfo?.lastname[0] }}
+      </div>
+      <div class="flex-column">
+        <div class="user-name">
+          {{ userInfo?.firstname }} {{ userInfo?.lastname }}
+        </div>
+        <div class="user-email">
+          {{ userInfo?.email }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="separator"></div>
+  <div class="section-box" (click) = "$event.stopPropagation()">
+    <h3>Trellode</h3>
+    <button mat-menu-item class="menu-button">
+      Paramètres
+    </button>
+    <button mat-menu-item class="menu-button">
+      Thème
+    </button>
+  </div>
+  <div class="separator"></div>
+  <div class="section-box" (click) = "$event.stopPropagation()">
+    <button mat-menu-item class="menu-button" (click)="logout()">
+      Se déconnecter
+    </button>
+  </div>
 </mat-menu>

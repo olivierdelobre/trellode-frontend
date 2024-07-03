@@ -1,12 +1,69 @@
+@import '../../../styles.scss';
+
 .initials {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background-color: #44546f;
-    color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #44546f;
+  color: white;
+  font-weight: 500;
+  text-transform: uppercase;
+  line-height: 32px;
+  text-align: center;
+  margin-right: 10px;
+}
+
+.section-box {
+  padding: 0 20px;
+
+  h3 {
     font-weight: 500;
     text-transform: uppercase;
-    line-height: 32px;
-    text-align: center;
-    margin-right: 10px;
+    font-size: 12px;
+    margin: 10px 0;
+    opacity: 85%;
+  }
+}
+
+.identitity {
+  margin-bottom: 15px;
+}
+
+.user-name {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.user-email {
+  font-size: 12px;
+  margin-top: -7px;
+}
+
+.separator {
+  height: 1px;
+  background-color: #E0E0E0;
+  margin: 0 10px;
+}
+
+.menu-button {
+  margin: 5px 0;
+  padding: 0;
+  font-size: 10px !important;
+}
+
+::ng-deep .mat-mdc-menu-item-text {
+  font-size: 14px !important;
+}
+
+::ng-deep .mat-mdc-menu-panel,
+.mat-mdc-menu-content {
+  width: 300px !important;
+  min-width: 300px !important;
+  max-width: 300px !important;
+}
+
+.navigation-menu {
+  width: 400px !important;
+  min-width: 400px !important;
+  max-width: 400px !important;
 }

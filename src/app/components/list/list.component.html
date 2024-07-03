@@ -3,7 +3,7 @@
     <div class="title">{{ list.title }}</div>
     <mat-icon class="mat-icon list-menu" svgIcon="dots" class="pointer" [matMenuTriggerFor]="menu"></mat-icon>
   </div>
-  <div cdkDropList (cdkDropListDropped)="drop($event)">
+  <div cdkDropList (cdkDropListDropped)="drop($event)" style="min-height: 20px;">
     @for (card of cards; track card.id) {
     <div class="card-item" cdkDrag>
       <app-card [card]="card"></app-card>

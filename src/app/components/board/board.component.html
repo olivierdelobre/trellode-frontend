@@ -13,10 +13,10 @@
     </div>
   </div>
   <div class="lists-list-container">
-    <div class="lists-list" [ngStyle]="{'width': (board.lists.length + 1) * 295 + 'px'}" cdkDropListOrientation="horizontal" cdkDropList (cdkDropListDropped)="drop($event)">
+    <div class="lists-list" [ngStyle]="{'width': (board.lists.length + 1) * 295 + 'px'}" cdkDropListOrientation="horizontal" cdkDropListGroup cdkDropList (cdkDropListDropped)="drop($event)">
       @for (list of board.lists; track list.id) {
       <div class="list" cdkDrag>
-        <app-list [list]="list" [color]="board.listColor"></app-list>
+        <app-list [list]="list" [color]="board.listColor" id="{{ list.id }}"></app-list>
       </div>
       }
       <div *ngIf="!showCreateListInput" class="flex-row add-list-bar" (click)="switchCreateListInput()">

@@ -9,6 +9,9 @@ export class BroadcastService {
     public refreshBoardSource = new BehaviorSubject<any>(0);
     public refreshBoard = this.refreshBoardSource.asObservable();
 
+    public refreshListSource = new BehaviorSubject<any>(0);
+    public refreshList = this.refreshListSource.asObservable();
+
     public refreshCardSource = new BehaviorSubject<any>(0);
     public refreshCard = this.refreshCardSource.asObservable();
 
@@ -18,6 +21,10 @@ export class BroadcastService {
 
     public updateRefreshBoard(newValue: any) {
         this.refreshBoardSource.next(newValue);
+    }
+
+    public updateRefreshList(newValue: any) {
+        this.refreshListSource.next(newValue);
     }
 
     public updateRefreshCard(newValue: any) {
